@@ -16,7 +16,7 @@ tagList( #needed for shinyjs
            header =         
              tags$head( #CSS styles
                cookie_box, ##Cookie box
-               tags$link(rel="shortcut icon", href="favicon_scotpho.ico"), #Icon for browser tab
+               tags$link(rel="shortcut icon", href="unicef_icon.ico"), #Icon for browser tab
                includeCSS("www/styles.css"),
                HTML("<base target='_blank'>") # to make external links open a new tab
              ),
@@ -27,13 +27,14 @@ tabPanel(
   title = " Home", icon = icon("home"),
   mainPanel(width = 11, style="margin-left:4%; margin-right:4%",
             introBox(  
-              fluidRow(column(7,(h3("Welcome to the ScotPHO profiles", style="margin-top:0px;"))),
+              fluidRow(column(7,(h3("Welcome to One Click Away", style="margin-top:0px;"))),
                        (column(4,actionButton("btn_landing",label="Help: Take tour of the tool",icon=icon('question-circle'),class="down")))),
               data.step = 1,
-              data.intro =(p(h4("Welcome to the ScotPHO Profiles Tool"),
-                             h5("This interactive tool provides access to a range of public
-                              health related indicators at different geographies including NHS boards, council areas and health and
-                              social care partnerships."),
+              data.intro =(p(h4("Welcome to One Click Away"),
+                             h5("The survey explores the experiences of children across various dimensions of their
+use of the Internet and generates and sustains a rigorous cross-national comparative
+evidence base. In addition, the study explores the Internet use of parents and to
+what extent they mediate their children’s online experiences."),
                              br(),
                              h5("There are different ways to navigate around the tool."),
                              h5("Different visualisations can be opened using the menu bar (the blue strip) at the top of the screen."),
