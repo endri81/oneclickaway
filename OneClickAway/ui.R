@@ -15,13 +15,12 @@ tagList( #needed for shinyjs
            collapsible = TRUE, #tab panels collapse into menu in small screens
            header =         
              tags$head( #CSS styles
-               cookie_box, ##Cookie box
                tags$link(rel="shortcut icon", href="unicef_icon.ico"), #Icon for browser tab
                includeCSS("www/styles.css"),
                HTML("<base target='_blank'>") # to make external links open a new tab
              ),
 ###############################################.
-## Landing page ----
+## Landing page ---
 ###############################################.
 tabPanel(
   title = " Home", icon = icon("home"),
@@ -48,7 +47,7 @@ what extent they mediate their children’s online experiences."),
               column(6, class="landing-page-column",br(), #spacing
                      introBox(
                        lp_main_box(image_name= "internet_access", 
-                                   button_name = 'jump_to_summary', title_box = "Profile summary",
+                                   button_name = 'jump_to_summary', title_box = "Internet Access",
                                    description = 'A high level view of an area across a set of indicators'),
                        data.step = 2,
                        data.intro = h5("The profile summary allows you to look at multiple indicators within an area at the same time"),
@@ -58,7 +57,7 @@ what extent they mediate their children’s online experiences."),
                      br(), #spacing
                      introBox( # tour of the tool
                        lp_main_box(image_name= "online_act", 
-                                   button_name = 'jump_to_table', title_box = "Data",
+                                   button_name = 'jump_to_table', title_box = "Digital Skills",
                                    description = 'View and download the data behind the tool'),
                        data.step = 6,
                        data.intro = h5("The 'Data' window can be used to filter and download profiles data")))),
@@ -72,12 +71,12 @@ what extent they mediate their children’s online experiences."),
                 #Trend plot box
                 column(6, class="landing-page-column",
                        lp_main_box(image_name= "online_risk", 
-                                                     button_name = 'jump_to_trend', title_box = "Trend",
+                                                     button_name = 'jump_to_trend', title_box = "Online Risks",
                                    description = 'Look at how an indicator changes over time')),
                 #Rank/map plot box
                 column(6, class="landing-page-column",
                        lp_main_box(image_name= "parent_mediation", 
-                                   button_name = 'jump_to_rank', title_box = "Rank",
+                                   button_name = 'jump_to_rank', title_box = "Parental mediation",
                                    description = 'Compare geographical variation for an indicator'))
               )),#introBox 3 close
               #Inequalities box
@@ -86,7 +85,7 @@ what extent they mediate their children’s online experiences."),
                        data.step = 7,
                        data.intro = h5("The inequalities module allows exploration of deprivation effects for a selection of indicators from the main profiles tool."),
                        lp_main_box(image_name= "landing_button_health_inequality", 
-                                   button_name = 'jump_to_ineq', title_box = "Health inequalities",
+                                   button_name = 'jump_to_ineq', title_box = "Demography",
                                    description = 'Explore how an indicator varies with deprivation'))
               ) #introBox 7 close
             ), # fluid row close
@@ -110,76 +109,55 @@ what extent they mediate their children’s online experiences."),
                        column(4, class="landing-page-column", 
                               #Indicator updates
                               lp_about_box(image_name= "child_identity", button_name = 'btn_indicator_updates', 
-                                           title_box = "Indicator updates", 
+                                           title_box = "School", 
                                            description = 'Find out which indicators have been updated in the last 60 days'),
                               #Resources box
                               lp_about_box(image_name= "landing_button_resources", button_name = 'jump_to_resources', 
-                                           title_box = "Resources", 
+                                           title_box = "Methodology", 
                                            description = 'Find technical information about the ScotPHO profile definitions and methodology')),
                        column(4, class="landing-page-column",
                               #Definitions
                               lp_about_box(image_name= "landing_button_technical_resources",
-                                           button_name = 'jump_to_definitions', title_box = "Definitions", 
+                                           button_name = 'jump_to_definitions', title_box = "Community", 
                                            description = 'Find out about indicator definitions and data sources'),
                               #Other profiles
                               lp_about_box(image_name= "landing_button_related_links", button_name = 'jump_to_others', 
-                                           title_box = "Other profiles", description = 'Links to alternative profiling tools'))
+                                           title_box = "Other sources", description = 'Links to alternative profiling tools'))
               ) #Close IntroBox
             )#Fluidrow bracket
   ) #main Panel bracket
 ),# tab panel bracket
 ###############################################.
-## Summary ----
+## Access to Internet ----
 ###############################################.
-tabPanel("Summary", icon = icon("list-ul"), value = "summary",
+tabPanel("Access to Internet", icon = icon("list-ul"), value = "summary",
          introBox(
            wellPanel(fluidRow( #Filter options
-           column(3,
-                  div(title="Select a geography level first, then select the are you want from the list. You can click in the box, hit backspace and start to type if you want to start searching.",
-                  p(tags$b("Step 1. Select a geography level and then an area of interest.")),
-                  selectInput("geotype_summary", label = NULL, choices=areatype_list,
-                              selected = "Health board"),
-                  conditionalPanel(#Conditional panel for extra dropdown for localities & IZ
-                    condition = "input.geotype_summary== 'HSC locality' | input.geotype_summary == 'Intermediate zone' ",
-                    div(title="This option restricts the HSC locality or IZ options below to only areas within a parent geography",                      
-                    selectInput("loc_iz_summary", label = "Step 1b. Select a region for localities or intermediate zones",
-                                choices = partnership_name))
-                  ),
-                  uiOutput("geoname_ui_summary"))
-           ),
-           column(3,
-                  div(title="Select the profile you are interested in. Not all profiles are available for all geographies",
-                  p(tags$b("Step 2. Select a profile ")),
-                  div(id= "summary_div", uiOutput("profile_ui_summary")),
-                  # domain if spine selected
-                  conditionalPanel(condition = 'input.chart_summary == "Spine"',
-                                   uiOutput("topic_ui_spine")))
-           ),
-           column(3,
-                  div(title="Compare against another area (e.g. Scotland) or against a previous period to see the evolution of the area",
-                  p(tags$b("Step 3. Select to compare by ")),
-                  awesomeRadio("comp_summary", label = NULL,
-                               choices = list("Area or" = 1, "Time" = 2), 
-                               selected = 1, inline=TRUE, checkbox = TRUE),
-                  uiOutput("comp_ui_summary")) # comparator options
-           ),
-           column(3,
-                  actionButton("help_summary",label="Help", icon= icon('question-circle'), class ="down"),
-                  actionButton("defs_summary",label="Definitions", icon= icon('info'), class ="down"),
-                  downloadButton('download_summary', 'Download data', class = "down"),
-                  uiOutput("save_chart_ui"))),
-         fluidRow(column(12,
-                column(3),#empty column to replicate offset and center content
-                column(6,
-                p(tags$b("Step 4. Select what type of summary you want to see:"), 
-                  " snapshot is a comparison with the latest data available, 
-                  trend will show how things are changing over time, and 
-                  spine compares indicators with the rest of areas of the same level."),
-                radioGroupButtons("chart_summary", status = "primary", justified = TRUE,
-                                  choices = c("Snapshot", "Trend", "Spine"), label=NULL  )),
-         column(3) #empty column to replicate offset and center content
-                   )) # column and row brackets
-         ), #well panel bracket
+           column(4,
+                  div(title="Select a group of interest first, then select type of dissaggregation and finally the question from the list",
+                  p(tags$b("Step 1. Select group of interest.")),
+                  selectInput("int_group", "Group of interest:",
+                              c("Children" = "child",
+                                "Parents" = "parent"))
+                  )),
+           column(4,
+                  div(title="Select type of disaggregation. ",
+                      p(tags$b("Step 2. Select type of dissaggregation")),
+                      selectInput("disagregim", "Type of dissaggregation:",
+                                  c("By Age" = "b_age",
+                                    "By Gender" = "b_gender"))
+                  )),
+           column(4,
+                  div(title="Select question you are interested in. Not all questions are available for all groups",
+                  p(tags$b("Step 3. Select question ")),
+                  selectInput("int_group", "Question you are interested in:",
+                              c("Internet access frequency" = "q1",
+                                "Reasons for limited access to Internet" = "q2",
+                                "Place of Internet use" = "q3",
+                                "Devices for Internet access" = "q4",
+                                "Time spent online" = "q5" ))
+)) # column and row brackets
+         )), #well panel bracket
          data.step = 4, 
          data.intro =(p(h5("Throughout the tool use the dropdown menus to change which indicators or geographies are displayed in the charts."),
                         br(),
@@ -220,9 +198,9 @@ tabPanel("Summary", icon = icon("list-ul"), value = "summary",
   ), #Tab panel bracket
 
 ###############################################.
-## Time trend ----
+## Digital Skills ----
 ###############################################.
-tabPanel("Trend", icon = icon("area-chart"), value = "trend",
+tabPanel("Digital Skills", icon = icon("area-chart"), value = "trend",
          sidebarPanel(width=4,
                       column(6,
                              actionButton("help_trend",label="Help", icon= icon('question-circle'), class ="down")),
@@ -272,9 +250,9 @@ div(title="Use the options below to add geographies to the trend chart, remember
          )
                       ), #Tab panel bracket
 ###############################################.
-## Rank and map ---- 
+## Online risks ---- 
 ###############################################.
-tabPanel("Rank", icon = icon("signal"), value = "rank",
+tabPanel("Online risks", icon = icon("signal"), value = "rank",
          wellPanel(#Filter options
            column(width = 4,
                   div(title="Select an indicator to see comparative information. Click in this box, hit backspace and start to type if you want to quickly find an indicator.",
@@ -337,9 +315,9 @@ tabPanel("Rank", icon = icon("signal"), value = "rank",
          ) #main panel bracket
 ), #Tab panel bracket
 ###############################################.
-## Health inequalities ---- 
+## Parental mediation ---- 
 ###############################################.
-tabPanel("Inequalities", icon = icon("balance-scale"), value = "ineq",
+tabPanel("Parental mediation", icon = icon("balance-scale"), value = "ineq",
          sidebarPanel(width = 3, #Filter options
                       actionButton("help_simd", label="Help", 
                                    icon= icon('question-circle'), class ="down"), 
@@ -413,9 +391,9 @@ tabPanel("Inequalities", icon = icon("balance-scale"), value = "ineq",
          )
 ), #Tab panel bracket
 ###############################################.
-## Data ----
+## Demography ----
 ###############################################.
-tabPanel("Data", icon = icon("table"), value = "table",
+tabPanel("Demography", icon = icon("table"), value = "table",
          #Sidepanel for filtering data
          mainPanel(
            width = 12, style="margin-left:0.5%; margin-right:0.5%",
@@ -557,9 +535,9 @@ navbarMenu("Info", icon = icon("info-circle"),
                     br()
            ),#Tab panel
 ###############################################.
-## Indicator definitions ----
+## Opportunities and Practices ----
 ###############################################.
-           tabPanel("Indicator definitions", value = "definitions",
+           tabPanel("Opportunities and Practices", value = "definitions",
                     #Sidepanel for filtering data
                     fluidRow(style = "width:60%; margin-left: 2%; min-width: 350px",
                              h4("Indicator definitions and technical information", style = "color:black;"),
@@ -630,9 +608,9 @@ navbarMenu("Info", icon = icon("info-circle"),
                     ) # well panel
            ), #tab panel
 ###############################################.             
-##############Resources----    
+##############School----    
 ###############################################.      
-           tabPanel("Resources", value = "resources",
+           tabPanel("School", value = "resources",
                     sidebarPanel(width=1),
                     mainPanel(
                       h4("Resources", style = "color:black;"),
@@ -746,9 +724,9 @@ tabPanel("Tour of the tool", value = "tour",
          )#main panel bracket
 ), #tab panel bracket
 ###############################################.             
-##############Other profiles----    
+##############Peers and community----    
 ###############################################.
-tabPanel("Other profiles", value = "others",
+tabPanel("Peers and community", value = "others",
          sidebarPanel(width=1),
          mainPanel(
            h4("Alternative profiles & resources", style = "color:black;"),
@@ -787,14 +765,13 @@ div(style = "margin-bottom: 30px;"), # this adds breathing space between content
 ##############Footer----    
 ###############################################.
 #Copyright warning
-tags$footer(column(6, "© Scottish Public Health Observatory v2.0 2018"), 
-            column(2, tags$a(href="mailto:ScotPHO@nhs.net", tags$b("Contact us!"), 
+tags$footer(column(6, "© Unicef Albania 2020"), 
+            column(2, tags$a(href="mailto:eraco@unicef.org", tags$b("Contact us!"), 
                               class="externallink", style = "color: white; text-decoration: none")), 
-            column(3, tags$a(href="https://www.scotpho.org.uk/about-us/scotpho-website-policies-and-statements/privacy-and-cookies", tags$b("Privacy & cookies"), 
-                             class="externallink", style = "color: white; text-decoration: none")), 
+            column(3), 
             column(1, actionLink("twitter_share", label = "Share", icon = icon("twitter"),
                               style= "color:white;", onclick = sprintf("window.open('%s')", 
-                              "https://twitter.com/intent/tweet?text=Check%out%ScotPHO's%profile%tool&url=https://scotland.shinyapps.io/ScotPHO_profiles_tool/"))), 
+                              "https://twitter.com/albania_unicef/"))), 
   style = "
    position:fixed;
    text-align:center;
