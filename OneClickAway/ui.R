@@ -1,6 +1,6 @@
 #Code to create One Click Away Shiny profile platform
 # This script includes the user-interface definition of the app.
-
+source("online_act.R")
 ###############################################.
 ## Header ---- 
 ###############################################.
@@ -47,7 +47,7 @@ what extent they mediate their children’s online experiences."),
               column(6, class="landing-page-column",br(), #spacing
                      introBox(
                        lp_main_box(image_name= "internet_access", 
-                                   button_name = 'jump_to_summary', title_box = "Internet Access",
+                                   button_name = 'jump_to_int_acc', title_box = "Internet Access",
                                    description = 'A high level view of an area across a set of indicators'),
                        data.step = 2,
                        data.intro = h5("The profile summary allows you to look at multiple indicators within an area at the same time"),
@@ -130,7 +130,7 @@ what extent they mediate their children’s online experiences."),
 ###############################################.
 ## Access to Internet ----
 ###############################################.
-tabPanel("Access to Internet", icon = icon("list-ul"), value = "summary",
+tabPanel("Access to Internet", icon = icon("list-ul"), value = "acc_int",
          introBox(
            wellPanel(fluidRow( #Filter options
            column(4,
@@ -150,7 +150,7 @@ tabPanel("Access to Internet", icon = icon("list-ul"), value = "summary",
            column(4,
                   div(title="Select question you are interested in. Not all questions are available for all groups",
                   p(tags$b("Step 3. Select question ")),
-                  selectInput("int_group", "Question you are interested in:",
+                  selectInput("q_group", "Question you are interested in:",
                               c("Internet access frequency" = "q1",
                                 "Reasons for limited access to Internet" = "q2",
                                 "Place of Internet use" = "q3",
@@ -166,34 +166,11 @@ tabPanel("Access to Internet", icon = icon("list-ul"), value = "summary",
          
          ), #introbox bracket
          mainPanel(width = 12,
-                   shiny::hr(),
-                   bsModal("mod_defs_summary", "Definitions", "defs_summary",
-                           htmlOutput('defs_text_summary')),
-                   fluidRow(column(4,
-                                   h4(textOutput("summary_title"), style="color: black; text-align: left"),
-                                   h5(textOutput("summary_subtitle"), style="color: black; text-align: left")
+                   fluidRow(
+                     h2("Module example"),
+                     linkedScatterUI("scatters"),
+                     textOutput("summary")
                    ),
-                   column(3,
-                          br(),
-                          br(),
-                          p(img(src='signif_better.png', height=18, style="padding-right: 2px; vertical-align:middle"), 
-                            "Better than comparator", br(),
-                            img(src='non_signif.png', height=18, style="padding-right: 2px; vertical-align:middle"), 
-                            "Not different to comparator", br(),
-                            img(src='signif_worse.png', height=18, style="padding-right: 2px; vertical-align:middle"), 
-                            "Worse than comparator", br(),
-                            img(src='signif_nocalc.png', height=18, style="padding-right: 2px; vertical-align:middle"), 
-                            "No differences can be calculated")),
-                   conditionalPanel(condition = 'input.chart_summary == "Spine"', 
-                                    column(5,
-                                           br(),
-                                           br(),
-                                           uiOutput("ui_spine_legend_selected"),
-                                           uiOutput("ui_spine_legend_areatype"),
-                                           uiOutput("ui_spine_legend_comparator")))),
-                   # Depending what users selects different visualizations
-                          uiOutput("summary_expl_text"),
-                          uiOutput("summary_ui_plots")
         )
   ), #Tab panel bracket
 
