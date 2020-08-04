@@ -42,11 +42,12 @@ function(input, output, session) {
     
   output$gmplot <-renderPlot({
     
-   p1 <- ggplot(data, aes(x= Reason, y= Total, fill= Total)) +geom_bar(stat= "identity")
+   p1 <- ggplot(data = data_source(), aes(x= Reason, y= Total, fill= Total)) +geom_bar(stat= "identity")
    print(p1)
     
   })
-    
-} #server closing bracket
+
+
+    } #server closing bracket
 
 #########################  END ----
