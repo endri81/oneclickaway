@@ -7,6 +7,7 @@
 ############################.
 library(shiny)
 library(shinyBS) #modals
+library(gridExtra)
 library(shinythemes) # layouts for shiny
 library(dplyr) # data manipulation
 library(ggplot2) #data visualization
@@ -127,3 +128,5 @@ yaxis_plots <- list(title = FALSE, rangemode="tozero", fixedrange=TRUE, size = 4
 font_plots <- list(family = '"Helvetica Neue", Helvetica, Arial, sans-serif')
 
 
+## Data Loading
+lim_internet <- read_csv("data/lim_internet.csv")

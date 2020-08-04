@@ -1,6 +1,7 @@
 #Code to create One Click Away Shiny profile platform
 # This script includes the user-interface definition of the app.
 source("online_act.R")
+
 ###############################################.
 ## Header ---- 
 ###############################################.
@@ -155,10 +156,15 @@ tabPanel("Access to Internet", icon = icon("list-ul"), value = "acc_int",
          ), #introbox bracket
          mainPanel(width = 12,
                    fluidRow(
-                     h2("Module example"),
-                     linkedScatterUI("scatters"),
-                     textOutput("summary")
-                   ),
+                      column(4,
+                      plotOutput("gmplot")),
+                      column(4,
+                             ),
+                      column(4,
+                             ),
+                      column(4,
+                             )
+ ),
         )
   ), #Tab panel bracket
 

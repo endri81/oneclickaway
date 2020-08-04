@@ -16,18 +16,13 @@ function(input, output, session) {
     updateTabsetPanel(session, "intabset", selected = "acc_int")
   })
   
-  
-  
-  
-  
-  df <- callModule(linkedScatter, "scatters", reactive(mpg),
-                   left = reactive(c("cty", "hwy")),
-                   right = reactive(c("drv", "hwy"))
-  )
-  
-  output$summary <- renderText({
-    sprintf("%d observation(s) selected", nrow(dplyr::filter(df(), selected_)))
+  output$gmplot <-renderPlot({
+    
+   p1 <- ggplot(lim_internet, aes(x= Reason, y= Total, fill= Total)) +geom_bar(stat= "identity")
+   print(p1)
+    
   })
+    
 } #server closing bracket
 
 #########################  END ----
