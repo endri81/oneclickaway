@@ -8,23 +8,19 @@
 library(shiny)
 library(shinyBS) #modals
 library(gridExtra)
+library(readr)
 library(shinythemes) # layouts for shiny
-library(dplyr) # data manipulation
-library(ggplot2) #data visualization
+library(tidyverse) # data manipulation
 library (DT) # for data tables
-library(leaflet) #javascript maps
 library(plotly) #interactive graphs
 library(shinyWidgets) # for extra widgets
 library(tibble) # rownames to column in techdoc
 library(shinyBS) #modals
 library(shinyjs)
 library(shinydashboard) #for valuebox on techdoc tab
-library(sp)
-library(lubridate) #for automated list of dates in welcome modal
 library(shinycssloaders) #for loading icons, see line below
 library(rmarkdown)
 library(flextable) #for tech document table
-library(webshot) #to download plotly charts
 library(rintrojs) # for help intros
 # As well as webshot phantomjs is needed l to download Plotly charts
 # https://github.com/rstudio/shinyapps-package-dependencies/pull/180
@@ -130,3 +126,5 @@ font_plots <- list(family = '"Helvetica Neue", Helvetica, Arial, sans-serif')
 
 ## Data Loading
 lim_internet <- read_csv("data/lim_internet.csv")
+device_freq <- read_csv("data/device_freq.csv")
+place_access <- read_csv("data/place_access.csv")
