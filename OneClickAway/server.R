@@ -15,6 +15,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_int_acc, {
     updateTabsetPanel(session, "intabset", selected = "acc_int")
   })
+  observeEvent(input$jump_to_digital, {
+    updateTabsetPanel(session, "intabset", selected = "digital")
+  })
   
   # Create a "data_source" reactive variable
   data_intacc <- reactive({
@@ -48,7 +51,7 @@ function(input, output, session) {
   })
   
 
-  output$gmplot <-renderPlot({
+  output$accplot <-renderPlot({
     if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
       {
       p <- ggplot(data = data_intacc()) +

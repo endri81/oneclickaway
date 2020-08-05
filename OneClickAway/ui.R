@@ -58,7 +58,7 @@ what extent they mediate their children’s online experiences."),
                                      br(), #spacing
                                      introBox( # tour of the tool
                                         lp_main_box(image_name= "online_act", 
-                                                    button_name = 'jump_to_table', title_box = "Digital Skills",
+                                                    button_name = 'jump_to_digital', title_box = "Digital Skills",
                                                     description = 'View and download the data behind the tool'),
                                         data.step = 6,
                                         data.intro = h5("The 'Data' window can be used to filter and download profiles data")))),
@@ -140,15 +140,18 @@ what extent they mediate their children’s online experiences."),
                                     radioButtons("ind_access", "Choose indicator:",
   c("Reasons for limited access to Internet" = "reason_access",
      "Places of Internet use" = "places_access",
-     "Internet access frequency on different devices" = "freq_access")
+     "Internet access frequency on different devices" = "freq_access")),
+  br(),
+  selectInput("dissag_access", "Choose metrics:",
+              c("By age" = "age_access",
+                "By gender" = "gender_access",
+                "Total" = "total_access"), width  ='60%'),
+  width = 4
                                     
-                                    )),
+                                    ),
   mainPanel(
-                                    selectInput("dissag_access", "Choose metrics:",
-                                                c("By age" = "age_access",
-                                                  "By gender" = "gender_access",
-                                                  "Total" = "total_access")),
-                                    plotOutput("gmplot")))
+
+                                    plotOutput("accplot"),   width = 8))
      
                                  ))
                        
@@ -157,7 +160,31 @@ what extent they mediate their children’s online experiences."),
               ###############################################.
               ## Digital Skills ----
               ###############################################.
-              tabPanel("Digital Skills", icon = icon("area-chart"), value = "trend"), #Tab panel bracket
+              tabPanel("Digital Skills", icon = icon("area-chart"), value = "digital",
+                       introBox(
+                          fluidPage(
+                             titlePanel("Online activities and digital skills"),
+                             sidebarLayout(
+                                sidebarPanel(
+            radioButtons("ind_digital", "Choose indicator:",
+            c("Websites or apps used by children" = "web_digital",
+             "Frequency of activities practised weekly or more often" = "act_digital",
+             "Children confidence in a digital skill" = "conf_digital")),
+                                   br(),
+                                   selectInput("dissag_access", "Choose metrics:",
+                                               c("By age" = "age_digital",
+                                                 "By gender" = "gender_digital",
+                                                 "Total" = "total_digital"), width  ='60%'),
+                                   width = 4
+                                   
+                                ),
+                                mainPanel(
+                                   
+                                   plotOutput("digplot"),   width = 8))
+                             
+                          ))
+                       
+              ), #Tab panel bracket
               ###############################################.
               ## Online risks ---- 
               ###############################################.

@@ -1,5 +1,8 @@
 /* CSS styles used in the shiny app */
 
+form-group.shiny-input-container {
+    margin-bottom: 0;
+}
 
 /* to avoid red text error messages in the whole app, take out for testing*/
 .shiny-output-error { visibility: hidden; }
