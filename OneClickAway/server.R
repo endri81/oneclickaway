@@ -18,7 +18,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_digital, {
     updateTabsetPanel(session, "intabset", selected = "digital")
   })
-  
+  ############################################### 
+  ## Internet Access  ----  
+  ###############################################.
   # Create a "data_source" reactive variable
   data_intacc <- reactive({
     # Return the appropriate data source depending on
@@ -117,6 +119,109 @@ function(input, output, session) {
                   print(p)
                 }
                    }) 
+  
+  ############################################### 
+  ## Digital Skills  ----  
+  ###############################################.    
+  # Create a "data_source" reactive variable
+  data_digital <- reactive({
+    # Return the appropriate data source depending on
+    # the chosen radio button
+    if (input$ind_digital == "web_digital" & input$dissag_digital == "age_digital") {
+      data_dig <- website_dig %>% select("Website_app", "9–11", "12–14", "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+      
+    } else if (input$ind_digital == "web_digital" & input$dissag_digital == "gender_digital") {
+      data_dig <- website_dig %>% select("Website_app", Male, Female) %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+      
+    } else if (input$ind_digital == "web_digital" & input$dissag_digital == "total_digital") {
+      data_dig <- website_dig %>% select("Website_app", "Total")
+    }
+    else if (input$ind_digital == "freq_act_digs" & input$dissag_digital == "age_digital") {
+      data_dig <- freq_act_dig %>% select("Activity", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "gender_digital") {
+      data_dig <- freq_act_dig %>% select("Activity", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "total_digital") {
+      data_dig <- freq_act_dig %>% select("Activity", "Total")
+    }
+    else if (input$ind_digital == "conf_digital" & input$dissag_digital == "age_digital") {
+      data_dig <- skill_conf_dig %>% select("Skill", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    }
+    return(data_dig)
+  })
+  
+  
+  output$digplot <-renderPlot({
+    if (input$ind_digital == "web_digital" & input$dissag_digital == "age_digital")
+    {
+      p1 <- ggplot(data = data_digital()) +
+        geom_col(aes(x=age_value, y= Website_app, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Websites or apps used by children, by age (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      
+      print(p1)
+    }         
+    else if (input$ind_digital == "web_digital" & input$dissag_digital == "gender_digital") {
+      p1 <- ggplot(data = data_digital()) +
+        geom_col(aes(x=gender_value, y= Website_app, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Websites or apps used by children, by gender (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_digital == "web_digital" & input$dissag_digital == "total_digital") {
+      p <- ggplot(data = data_digital()) +
+        geom_col(aes(x=Total, y= Website_app, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Websites or apps used by children(%) ", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }   
+    else if (input$ind_digital == "freq_act_digs" & input$dissag_digital == "age_digital") {
+      p <- ggplot(data = data_digital()) +
+        geom_col(aes(x=age_value, y= Activity, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Frequency of activities practised weekly or more often, by age group (%)", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "gender_digital") {
+      p <- ggplot(data = data_digital()) +
+        geom_col(aes(x=gender_value, y=Activity, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Frequency of activities practised weekly or more often, by gender (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "total_digital") {
+      p <- ggplot(data = data_digital()) +
+        geom_col(aes(x=Total, y=Activity, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Frequency of activities practised weekly or more often(%)", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }   
+    else if (input$ind_digital == "conf_digital" & input$dissag_digital == "age_digital") {   
+      p <- ggplot(data = data_digital()) +
+        geom_col(aes(x=age_value, y= Skill, fill=age_group), position = "stack")+
+        theme(legend.position = "none") +   
+        labs(title = "Children who report being fairly or very confident in a digital skill (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+  })   
 
   } #server closing bracket
 

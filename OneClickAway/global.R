@@ -123,6 +123,13 @@ font_plots <- list(family = '"Helvetica Neue", Helvetica, Arial, sans-serif')
 
 
 ## Data Loading
+### Internet Access
 lim_internet <- read_csv("data/lim_internet.csv")
 device_freq <- read_csv("data/device_freq.csv")
 place_access <- read_csv("data/place_access.csv")
+
+## Digital Skills
+
+freq_act_dig <- read_csv("data/freq_act_dig.csv")
+website_dig <- read_csv("data/website_dig.csv")
+skill_conf_dig <- read_csv("data/skill_conf_dig.csv")
