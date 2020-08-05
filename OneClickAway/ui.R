@@ -147,7 +147,7 @@ what extent they mediate their children’s online experiences."),
                                     selectInput("dissag_access", "Choose metrics:",
                                                 c("By age" = "age_access",
                                                   "By gender" = "gender_access",
-                                                  "By reason" = "reason_access")),
+                                                  "Total" = "total_access")),
                                     plotOutput("gmplot")))
      
                                  ))

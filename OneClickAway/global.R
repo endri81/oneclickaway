@@ -104,11 +104,9 @@ lp_about_box <- function(title_box, image_name, button_name, description) {
 ## Palettes ----
 ###############################################.   
 #Palette for SIMD.
-pal_simd_bar <- c('#abd9e9', '#74add1', '#4575b4', '#313695', '#022031')
-pal_simd_trend <- c('#abd9e9', '#74add1', '#4575b4', '#313695', '#022031', '#FF0000')
+pal_simd_bar <- c('#01579B', '#0277BD', '#0288D1', '#039BE5', '#03A9F4', '#29B6F6', '#4FC3F7', '#81F4DA', '#B3E5FC')
 
-#Palette for map
-pal_map <- c('#2c7bb6','#abd9e9', '#ffffbf','#fdae61','#d7191c')
+
 
 ###############################################.
 ## Plot parameters ----
