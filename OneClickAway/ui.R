@@ -188,7 +188,7 @@ what extent they mediate their children’s online experiences."),
               ###############################################.
               ## Online risks ---- 
               ###############################################.
-              tabPanel("Online risks", icon = icon("signal"), value = "risk"), #Tab panel bracket
+              tabPanel("Online risks", icon = icon("signal"), value = "risk", #Tab panel bracket
               introBox(
                  fluidPage(
                     titlePanel("Online risks and potential harm"),
@@ -208,16 +208,16 @@ c("Children’s level of being upset by exposure to harmful content online" = "u
                                       c("By age" = "age_risk",
                                         "By gender" = "gender_risk",
                                         "Total" = "total_risk"), width  ='60%'),
-                          width = 4
+                          width = 5
                           
                        ),
                        mainPanel(
                           
-                          plotOutput("riskplot"),   width = 8))
+                          plotOutput("riskplot"),   width = 7))
                     
                  ))
-              
-     ), #Tab panel bracket
+
+), #Tab panel bracket
               ## Parental mediation ---- 
               ###############################################.
               tabPanel("Parental mediation", icon = icon("balance-scale"), value = "ineq"), #Tab panel bracket

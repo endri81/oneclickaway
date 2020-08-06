@@ -28,7 +28,7 @@ function(input, output, session) {
   data_intacc <- reactive({
     # Return the appropriate data source depending on
     # the chosen radio button
-    if (input$ind_access == "Total" & input$dissag_access == "age_access") {
+    if (input$ind_access == "reason_access" & input$dissag_access == "age_access") {
       data <- lim_internet %>% select("Reason", "9–11", "12–14", "15–17") %>%
       gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
@@ -226,6 +226,295 @@ function(input, output, session) {
     }
   })   
 
+  ############################################### 
+  ## Online Risks  ----  
+  ###############################################.   
+  # Create a "data_source" reactive variable
+  data_risk <- reactive({
+    # Return the appropriate data source depending on
+    # the chosen radio button
+    if (input$ind_risk == "upset_level" & input$dissag_risk == "age_risk") {
+      data_risk <- upset_level %>% select("Level", "9–11", "12–14", "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+      
+    } else if (input$ind_risk == "upset_level" & input$dissag_risk == "gender_risk") {
+      data_risk <- upset_level %>% select("Level", Male, Female) %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+      
+    } else if (input$ind_risk == "upset_level" & input$dissag_risk == "total_risk") {
+      data_risk <- upset_level %>% select("Level", "Total")
+    }
+    else if (input$ind_risk == "upset_freq" & input$dissag_risk == "age_risk") {
+      data_risk <- upset_freq %>% select("Frequency", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_risk == "upset_freq" & input$dissag_risk == "gender_risk") {
+      data_risk <- upset_freq %>% select("Frequency", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "upset_freq" & input$dissag_risk == "total_risk") {
+      data_risk <- upset_freq %>% select("Frequency", "Total")
+    }
+    else if (input$ind_risk == "ways_exp" & input$dissag_risk == "age_risk") {
+      data_risk <- means_exp %>% select("Means", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_risk == "ways_exp" & input$dissag_risk == "gender_risk") {
+      data_risk <- means_exp %>% select("Means", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "ways_exp" & input$dissag_risk == "total_risk") {
+      data_risk <- means_exp %>% select("Means", "Total")
+    }
+      else if (input$ind_risk == "way_feel" & input$dissag_risk == "gender_risk") {
+      data_risk <- feeling_exp %>% select("Feeling", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "way_feel" & input$dissag_risk == "total_risk") {
+      data_risk <- feeling_exp %>% select("Feeling", "Total")
+    }
+    else if (input$ind_risk == "means_sex" & input$dissag_risk == "age_risk") {
+      data_risk <- means_sex %>% select("Means", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_risk == "means_sex" & input$dissag_risk == "gender_risk") {
+      data_risk <- means_sex %>% select("Means", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "means_sex" & input$dissag_risk == "total_risk") {
+      data_risk <- means_sex %>% select("Means", "Total")
+    }
+    else if (input$ind_risk == "upset_level_sex" & input$dissag_risk == "age_risk") {
+      data_risk <- upset_level_dis %>% select("upset_level", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_risk == "upset_level_sex" & input$dissag_risk == "gender_risk") {
+      data_risk <- upset_level_dis %>% select("upset_level", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "upset_level_sex" & input$dissag_risk == "total_risk") {
+      data_risk <- upset_level_dis %>% select("upset_level", "Total")
+    }
+    else if (input$ind_risk == "parent_aware" & input$dissag_risk == "age_risk") {
+      data_risk <- parent_aware %>% select("Online_risk", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    } else if (input$ind_risk == "parent_aware" & input$dissag_risk == "gender_risk") {
+      data_risk <- parent_aware %>% select("Online_risk", "Male", "Female")  %>%
+        gather ("gender", "gender_value", "Male", "Female")  
+    } else if (input$ind_risk == "parent_aware" & input$dissag_risk == "total_risk") {
+      data_risk <- parent_aware %>% select("Online_risk", "Total")
+    }
+    
+    
+    
+    
+    return(data_risk)
+  })
+  
+  
+  output$riskplot <-renderPlot({
+    if (input$ind_risk == "upset_level" & input$dissag_risk == "age_risk"){
+      p1 <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= Level, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s level of being upset by exposure to harmful content online, by age (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      
+      print(p1)
+    }         
+    else if (input$ind_risk == "upset_level" & input$dissag_risk == "gender_risk") {
+      p1 <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y= Level, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s level of being upset by exposure to harmful content online, by gender (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_risk == "upset_level" & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y= Level, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s level of being upset by exposure to harmful content online (%) ", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }   
+    else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "age_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= Frequency, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How often children felt upset by hateful and degrading messages online, by age (%)", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y=Frequency, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How often children felt upset by hateful and degrading messages online, by age gender (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y=Frequency, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How often children felt upset by hateful and degrading messages online (%)", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }   
+    else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "age_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= Means, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Ways in which children were exposed to sexual content, by age (%) ", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y=Means, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Ways in which children were exposed to sexual content, by gender (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y=Means, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Ways in which children were exposed to sexual content(%) ", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }   
+    else if (input$ind_risk == "way_feel"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y=Feeling, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children felt after seeing sexual content online, by gender (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "way_feel"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y=Feeling, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children felt after seeing sexual content online (%)", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }  
+    else if (input$ind_risk == "means_sex"  & input$dissag_risk == "age_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= Means, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Means by which children saw sexual content online, by age (%)", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "means_sex"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y=Means, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Means by which children saw sexual content online, by gender (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "means_sex"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y=Means, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Means by which children saw sexual content online", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }  
+    else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "age_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= upset_level, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children felt after seeing sexual content, by age (%)", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y=upset_level, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children felt after seeing sexual content, by gender (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y=upset_level, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children felt after seeing sexual content", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }     
+    else if (input$ind_risk == "parent_aware"  & input$dissag_risk == "age_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=age_value, y= Online_risk, fill=age_group), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parents’ awareness of children’s experience of online risks, by child’s age (%)", 
+             x = NULL, y = NULL)   +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "parent_aware"  & input$dissag_risk == "gender_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=gender_value, y= Online_risk, fill=gender), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parents’ awareness of children’s experience of online risks, by child’s gender(%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p)
+    }
+    else if (input$ind_risk == "parent_aware"  & input$dissag_risk == "total_risk") {
+      p <- ggplot(data = data_risk()) +
+        geom_col(aes(x=Total, y= Online_risk, fill = Total), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parents’ awareness of children’s experience of online risks", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p)
+    }  
+    
+  })  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   } #server closing bracket
 
 #########################  END ----

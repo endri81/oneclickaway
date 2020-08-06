@@ -143,6 +143,7 @@ means_exp <- read_csv("data/means_exp.csv")
 parent_aware <- read_csv("data/parent_aware.csv")
 upset_level <- read_csv("data/upset_level.csv")
 upset_level_dis <- read_csv("data/upset_level_dis.csv")
+upset_freq <- read_csv("data/upset_freq.csv")
 
 
 
