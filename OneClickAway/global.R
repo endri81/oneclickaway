@@ -133,3 +133,38 @@ place_access <- read_csv("data/place_access.csv")
 freq_act_dig <- read_csv("data/freq_act_dig.csv")
 website_dig <- read_csv("data/website_dig.csv")
 skill_conf_dig <- read_csv("data/skill_conf_dig.csv")
+
+
+## Online risks
+
+parent_perc <- read_csv("data/parent_perc.csv")
+means_sex <- read_csv("data/means_sex.csv")
+means_exp <- read_csv("data/means_exp.csv")
+parent_aware <- read_csv("data/parent_aware.csv")
+upset_level <- read_csv("data/upset_level.csv")
+upset_level_dis <- read_csv("data/upset_level_dis.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

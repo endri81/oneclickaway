@@ -18,6 +18,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_digital, {
     updateTabsetPanel(session, "intabset", selected = "digital")
   })
+  observeEvent(input$jump_to_risk, {
+    updateTabsetPanel(session, "intabset", selected = "risk")
+  })
   ############################################### 
   ## Internet Access  ----  
   ###############################################.

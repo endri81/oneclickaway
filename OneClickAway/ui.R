@@ -72,7 +72,7 @@ what extent they mediate their children’s online experiences."),
                                         #Trend plot box
                                         column(6, class="landing-page-column",
                                                lp_main_box(image_name= "online_risk", 
-                                                           button_name = 'jump_to_trend', title_box = "Online Risks",
+                                                           button_name = 'jump_to_risk', title_box = "Online Risks",
                                                            description = 'Look at how an indicator changes over time')),
                                         #Rank/map plot box
                                         column(6, class="landing-page-column",
@@ -188,8 +188,36 @@ what extent they mediate their children’s online experiences."),
               ###############################################.
               ## Online risks ---- 
               ###############################################.
-              tabPanel("Online risks", icon = icon("signal"), value = "rank"), #Tab panel bracket
-              ###############################################.
+              tabPanel("Online risks", icon = icon("signal"), value = "risk"), #Tab panel bracket
+              introBox(
+                 fluidPage(
+                    titlePanel("Online risks and potential harm"),
+                    sidebarLayout(
+                       sidebarPanel(
+                          radioButtons("ind_risk", "Choose indicator:",
+c("Children’s level of being upset by exposure to harmful content online" = "upset_level",
+"How often children felt upset by hateful and degrading messages online" = "upset_freq",
+"Ways in which children were exposed to sexual content" = "ways_exp",
+"How children felt after seeing sexual content online" = "way_feel",
+"Means by which children saw sexual content online" = "means_sex",
+"Children level of feeling upset after seeing sexual content"= "upset_level_sex",
+"Parents’ awareness of children’s experience of online risks" = "parent_aware"
+)),
+                          br(),
+                          selectInput("dissag_risk", "Choose metrics:",
+                                      c("By age" = "age_risk",
+                                        "By gender" = "gender_risk",
+                                        "Total" = "total_risk"), width  ='60%'),
+                          width = 4
+                          
+                       ),
+                       mainPanel(
+                          
+                          plotOutput("riskplot"),   width = 8))
+                    
+                 ))
+              
+     ), #Tab panel bracket
               ## Parental mediation ---- 
               ###############################################.
               tabPanel("Parental mediation", icon = icon("balance-scale"), value = "ineq"), #Tab panel bracket
