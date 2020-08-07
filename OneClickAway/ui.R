@@ -77,7 +77,7 @@ what extent they mediate their children’s online experiences."),
                                         #Rank/map plot box
                                         column(6, class="landing-page-column",
                                                lp_main_box(image_name= "parent_mediation", 
-                                                           button_name = 'jump_to_rank', title_box = "Parental mediation",
+                                                           button_name = 'jump_to_parent', title_box = "Parental mediation",
                                                            description = 'Compare geographical variation for an indicator'))
                                      )),#introBox 3 close
                               #Inequalities box
@@ -220,8 +220,35 @@ c("Children’s level of being upset by exposure to harmful content online" = "u
 ), #Tab panel bracket
               ## Parental mediation ---- 
               ###############################################.
-              tabPanel("Parental mediation", icon = icon("balance-scale"), value = "ineq"), #Tab panel bracket
-              ###############################################.
+              tabPanel("Parental mediation", icon = icon("balance-scale"), value = "parent", #Tab panel bracket
+                       introBox(
+                          fluidPage(
+titlePanel("Parental mediation of children’s online experience"),
+                             sidebarLayout(
+                                sidebarPanel(
+                                   radioButtons("ind_parent", "Choose indicator:",
+c("Parental active mediation as reported by children" = "parent_med",
+"Activities that children can do at any time" = "child_act",
+"Activities that parents prohibit their children from engaging in" = "proh_act",
+"Parental monitoring activities practised often or very often" = "monitor"
+                                                )),
+                                   br(),
+                                   selectInput("dissag_parent", "Choose metrics:",
+                                               c("By age" = "age_parent",
+                                                 "By gender" = "gender_parent",
+                                                 "Total" = "total_parent"), width  ='60%'),
+                                   width = 5
+                                   
+                                ),
+                                mainPanel(
+                                   
+                                   plotOutput("parentplot"),   width = 7))
+                             
+                          ))
+              ), #Tab panel bracket              
+              
+              
+              
               ## Demography ----
               ###############################################.
               tabPanel("Demography", icon = icon("table"), value = "table"), #Tab panel bracket  

@@ -147,8 +147,12 @@ upset_freq <- read_csv("data/upset_freq.csv")
 
 
 
+## Parental mediation
 
-
+child_act <- read_csv("data/child_act.csv")
+parent_med <- read_csv("data/parent_med.csv")
+proh_act <- read_csv("data/proh_act.csv")
+monitor <- read_csv("data/monitor.csv")
 
 
 
