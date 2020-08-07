@@ -359,7 +359,7 @@ c("Parental active mediation as reported by children" = "parent_med",
                                   fluidPage(
                                      
                                            
-                                     withMathJax(includeMarkdown("keyfindings.Rmd")))
+                                     includeMarkdown("keyfindings.Rmd"))
                                      
                                  
               ), #Tab panel bracket   

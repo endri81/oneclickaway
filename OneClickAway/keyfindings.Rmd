@@ -1,15 +1,20 @@
 ---
 title: "One Click Away"
 subtitle : "Children’s experience of Internet use in Albania"
-output: 
-  html_document:
-    toc: true # table of content true
-    toc_depth: 3  # upto three depths of headings (specified by #, ## and ###)
-    number_sections: true  ## if you want number sections at each table header
-    theme: united  # many options for theme, this one is my favorite.
-    highlight: tango  # specifies the syntax highlighting style
-    css: my.css   # you can add your custom css, should be in same folder
+output:
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: false
+    highlight: tango
+    toc_depth: 1
+    toc_float: true
 ---
+
+
+
+
 
 ## Access to Internet
 
@@ -50,9 +55,9 @@ participation.
 
   - When something upsetting happens to them on the Internet, children tend to prefer their peers as a source of support, and are very reluctant to speak to teachers or child-care professionals.
 
- - The most common content risks that Albanian children face is their exposure to real violence, affecting more than 3 out 10 children.
+  - The most common content risks that Albanian children face is their exposure to real violence, affecting more than 3 out 10 children.
 
- - Children are exposed to sexual content online mostly involuntarily, through pop-ups. At the same time, more than half of children reported seeing sexual content on the Internet because they wanted to. Only a small proportion, mostly the youngest, were upset after seeing sexual content, while the majority were either indifferent or happy about it.
+  - Children are exposed to sexual content online mostly involuntarily, through pop-ups. At the same time, more than half of children reported seeing sexual content on the Internet because they wanted to. Only a small proportion, mostly the youngest, were upset after seeing sexual content, while the majority were either indifferent or happy about it.
 
   - One in four children reported had at least one contact online with someone whom they had never met face-to-face before and almost 2 in 10 reported meeting in person someone they had previously known only on the web. Only a small portion of these children were upset by these face-to-face meetings.
 
