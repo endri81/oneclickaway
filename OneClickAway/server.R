@@ -24,6 +24,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_parent, {
     updateTabsetPanel(session, "intabset", selected = "parent")
   })
+  observeEvent(input$jump_to_kfind, {
+    updateTabsetPanel(session, "intabset", selected = "kfind")
+  })
   ############################################### 
   ## Internet Access  ----  
   ###############################################.

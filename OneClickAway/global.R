@@ -10,6 +10,7 @@ library(shinyBS) #modals
 library(gridExtra)
 library(readr)
 library(shinythemes) # layouts for shiny
+library(rmdformats)
 library(tidyverse) # data manipulation
 library (DT) # for data tables
 library(plotly) #interactive graphs
