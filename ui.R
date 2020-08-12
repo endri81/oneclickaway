@@ -252,7 +252,7 @@ title_box = "About", description = 'About dashboard One Click Away'))
               ###############################################.
               ## Digital Skills ----
               ###############################################.
-              tabPanel("Digital Skills", icon = icon("area-chart"), value = "digital",
+              tabPanel("Digital Skills", icon = icon("www/area-chart"), value = "digital",
                        introBox(
                           fluidPage(
                              titlePanel("Online activities and digital skills"),
