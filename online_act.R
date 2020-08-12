@@ -13,16 +13,22 @@ linkedScatterUI <- function(id) {
 linkedScatter <- function(input, output, session, data, left, right) {
   # Yields the data frame with an additional column "selected_"
   # that indicates whether that observation is brushed
-  dataWithSelection <- reactive({
-    brushedPoints(data(), input$brush, allRows = TRUE)
-  })
-  
-  output$plot1 <- renderPlot({
-    scatterPlot(dataWithSelection(), left())
-  })
+
+    output$plot1 <- renderPlot({
+p <- ggplot(lim_internet, aes(x=Reason, y=Total, fill=Total)) +
+        +     geom_bar(stat="identity")+theme_minimal()
+print(p)  
+
+})
   
   output$plot2 <- renderPlot({
-    scatterPlot(dataWithSelection(), right())
+    p < - ggplot(lim_internet, aes(x=Male, y=Female, fill=Reason)) +
+      geom_bar(stat="identity")+
+      geom_text(aes(y=label_ypos, label=len), vjust=1.6, 
+                color="white", size=3.5)+
+      scale_fill_brewer(palette="Paired")+
+      theme_minimal()
+    print(p)  
   })
   
   return(dataWithSelection)

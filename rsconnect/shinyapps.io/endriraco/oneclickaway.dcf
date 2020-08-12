@@ -1,0 +1,12 @@
+name: oneclickaway
+title: oneclickaway
+username:
+account: endriraco
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2477108
+bundleId: 3503859
+url: https://endriraco.shinyapps.io/OneClickAway/
+when: 1597189180.65708
+asMultiple: FALSE
+asStatic: FALSE

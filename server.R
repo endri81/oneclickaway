@@ -27,6 +27,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_kfind, {
     updateTabsetPanel(session, "intabset", selected = "kfind")
   })
+  observeEvent(input$jump_to_data, {
+    updateTabsetPanel(session, "intabset", selected = "data")
+  })
   ############################################### 
   ## Internet Access  ----  
   ###############################################.
@@ -675,8 +678,45 @@ function(input, output, session) {
   })  
   
   
+## Data tab
   
+  output$ui <- renderUI({
+    if (is.null(input$input_type))
+      return()
+    
+    # Depending on input$input_type, we'll generate a different
+    # UI component and send it to the client.
+    switch(input$input_type,
+           "ch1" = radioButtons("rb_acc", "Access to Internet",
+                                choices = c("Option 1" = "option1",
+                                            "Option 2" = "option2"),
+                                selected = "option2"
+           ),
+           "ch2" = radioButtons("rb_digital", "Digital Skills",
+                                choices = c("Option 1" = "option1",
+                                            "Option 2" = "option2"),
+                                selected = "option2"
+           ),
+
+           "ch3" = radioButtons("rb_risk", "Online Risks",
+                                         choices = c("Option 1" = "option1",
+                                                     "Option 2" = "option2"),
+                                         selected = "option2"
+           ),
+           "ch4" = radioButtons("rb_parent", "Parental mediation",
+                                choices = c("Option 1" = "option1",
+                                            "Option 2" = "option2"),
+                                selected = "option2"
+           ))
+  })
   
+  output$input_type_text <- renderText({
+    input$input_type
+  })
+  
+  output$dynamic_value <- renderPrint({
+    str(input$dynamic)
+  })
   
   
   

@@ -1,7 +1,6 @@
 #Code to create One Click Away Shiny profile platform
 # This script includes the user-interface definition of the app.
 source("online_act.R")
-setwd("C:/Users/endri/Dropbox/Work/Unicef/OneClickAwayDashboard/oneclickaway/OneClickAway/")
 ###############################################.
 ## Header ---- 
 ###############################################.
@@ -364,10 +363,39 @@ c("Parental active mediation as reported by children" = "parent_med",
                                  
               ), #Tab panel bracket   
                          ###############################################.             
-                        ##############Evidence for action----    
+                        ##############Data----    
                          ###############################################. 
-                         tabPanel(a("Evidence for action", href="https://www.unicef.org/albania/documents/one-click-away", target="_blank", value = "evidence")
-                         ), #tabPanel bracket
+                         tabPanel("Data", value = "data",
+                                  fluidPage(
+                                     
+                                     titlePanel("Downloading Data"),
+                                     
+                                     fluidRow(
+                                        
+                                        column(3, wellPanel(
+                                           selectInput("input_type", "Choose study chapter",
+                                                       c( "Access to Internet" = "ch1",
+                                                         "Digital Skills" = "ch2",
+                                                         "Online risks" = "ch3",
+                                                         "Parental mediation" = "ch4" 
+                                                       )
+                                           ),
+                                        br(),
+                                        br(),
+                                           # This outputs the dynamic UI component
+                                           uiOutput("ui")
+                                        )),
+                                        
+                                        column(3,
+                                               tags$p("Dynamic input value:"),
+                                               verbatimTextOutput("dynamic_value")
+                                        )
+                                     )
+                                        
+                                     )
+
+                                 
+                         ), #Tab panel bracket
                          ############## Methodology ----    
                          ###############################################.      
                          tabPanel("Methodology", value = "method"), #Tab panel bracket
