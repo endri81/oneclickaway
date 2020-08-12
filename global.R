@@ -23,11 +23,10 @@ library(shinycssloaders) #for loading icons, see line below
 library(rmarkdown)
 library(flextable) #for tech document table
 library(rintrojs) # for help intros
-# As well as webshot phantomjs is needed l to download Plotly charts
-# https://github.com/rstudio/shinyapps-package-dependencies/pull/180
-if (is.null(suppressMessages(webshot:::find_phantom()))) {
-  webshot::install_phantomjs()
-}
+library(rmarkdown) # for help intros
+library(knitr)
+library(knitrBootstrap)
+
 
 
 
@@ -145,6 +144,7 @@ parent_aware <- read_csv("data/parent_aware.csv")
 upset_level <- read_csv("data/upset_level.csv")
 upset_level_dis <- read_csv("data/upset_level_dis.csv")
 upset_freq <- read_csv("data/upset_freq.csv")
+feeling_exp <- read_csv("data/feeling_exp.csv")
 
 
 
@@ -154,6 +154,8 @@ child_act <- read_csv("data/child_act.csv")
 parent_med <- read_csv("data/parent_med.csv")
 proh_act <- read_csv("data/proh_act.csv")
 monitor <- read_csv("data/monitor.csv")
+
+
 
 
 

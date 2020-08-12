@@ -1,11 +1,10 @@
-#Code to create ScotPHO's Shiny profile platform
+#Code to create One Click Away Shiny profile platform
 #This script includes the data manipulation necessary to produce data in the way
 #the Shiny app needs.
 
 ############################.
 ##Filepaths ----
 ############################.
-  lookups <- "./OneClickAway/data/"
 
 ############################.
 ##Packages ----

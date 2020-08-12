@@ -1,6 +1,5 @@
 #Code to create One Click Away Shiny profile platform
 # This script includes the user-interface definition of the app.
-source("online_act.R")
 ###############################################.
 ## Header ---- 
 ###############################################.
@@ -355,11 +354,12 @@ c("Parental active mediation as reported by children" = "parent_med",
                          ## Key Findings ----
                          ###############################################.
                          tabPanel("Key Findings", value = "kfind",
-                                  fluidPage(
-                                     
-                                           
-                                     includeMarkdown("keyfindings.Rmd"))
-                                     
+
+                                  fluidPage( 
+                                     tags$iframe(src = './keyfindings.html', # put myMarkdown.html to /www
+                                                 width = '100%', height = '800px', 
+                                                 frameborder = 0, scrolling = 'no'
+                                     ))                              
                                  
               ), #Tab panel bracket   
                          ###############################################.             
@@ -377,8 +377,7 @@ c("Parental active mediation as reported by children" = "parent_med",
                                                        c( "Access to Internet" = "ch1",
                                                          "Digital Skills" = "ch2",
                                                          "Online risks" = "ch3",
-                                                         "Parental mediation" = "ch4" 
-                                                       )
+                                                         "Parental mediation" = "ch4")
                                            ),
                                         br(),
                                         br(),

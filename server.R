@@ -704,44 +704,56 @@ a digital skill" = "skill_conf_dig"),
            ),
 
            "ch3" = radioButtons("rb_risk", "Online Risks",
-                                         choices = c("Children’s level of being upset by exposure to harmful content online" = "upset_lev",
-                                                     "How often children felt upset by hateful and degrading messages online" = "upset_freq",
-                                         "Ways in which children were exposed to sexual content" = "means_exp",
-                                         "How children felt after seeing sexual content online" = "feeling_exp",
-                                         "Means by which children saw sexual content online" = "means_sex",
-                                         "How children felt after seeing sexual content"= "upset_lev_dis"
+ choices = c("Children’s level of being upset by exposure to harmful content online" = "upset_lev",
+"How often children felt upset by hateful and degrading messages online" = "upset_freq",
+"Ways in which children were exposed to sexual content" = "means_exp",
+"How children felt after seeing sexual content online" = "feeling_exp",
+"Means by which children saw sexual content online" = "means_sex",
+"How children felt after seeing sexual content"= "upset_lev_dis"
                                                      ),
-                                         selected = "option2"
+                                         selected = "upset_lev"
            ),
            "ch4" = radioButtons("rb_parent", "Parental mediation",
                                 choices = c("Parents’ awareness of children’s experience of online risks" = "parent_aware",
                                             "Parental active mediation as reported by children" = "parent_med",
                                             "Activities that parents prohibit their children from engaging in" = "proh_act",
                                             "Parental monitoring activities practised often or very often" = "monitor"),
-                                selected = "option2"
+                                selected = "parent_aware"
            ))
   })
   
   # Reactive value for selected dataset ----
   datasetInput <- reactive({
-    if (input$input_type == "ch1" & input$rb_acc == "lim_internet") {lim_internet}
-    else if (input$input_type == "ch1" & input$rb_acc == "place_access") {place_access}  
-    else if (input$input_type == "ch1" & input$rb_acc == "place_access") {place_access} 
-    else if (input$input_type == "ch1" & input$rb_acc == "device_freq") {device_freq} 
-    else if (input$input_type == "ch2" & input$rb_digital == "child_act") {child_act} 
-    else if (input$input_type == "ch2" & input$rb_digital == "freq_act_dig") {freq_act_dig} 
-    else if (input$input_type == "ch2" & input$rb_digital == "website_dig") {website_dig} 
-    else if (input$input_type == "ch2" & input$rb_digital == "skill_conf_dig") {skill_conf_dig}  
-    else if (input$input_type == "ch3" & input$rb_risk == "upset_lev") {upset_lev} 
-    else if (input$input_type == "ch3" & input$rb_risk == "upset_freq") {upset_freq} 
-    else if (input$input_type == "ch3" & input$rb_risk == "means_exp") {means_exp}  
-    else if (input$input_type == "ch3" & input$rb_risk == "feeling_exp") {feeling_exp} 
-    else if (input$input_type == "ch3" & input$rb_risk == "means_sex") {means_sex} 
-    else if (input$input_type == "ch3" & input$rb_risk == "upset_lev_dis") {upset_lev_dis}  
-    else if (input$input_type == "ch4" & input$rb_parent == "parent_aware") {parent_aware}  
-    else if (input$input_type == "ch4" & input$rb_parent == "parent_med") {parent_med} 
-    else if (input$input_type == "ch4" & input$rb_parent == "proh_act") {proh_act} 
-    else if (input$input_type == "ch4" & input$rb_parent == "monitor") {monitor}  
+    if (input$input_type == "ch1"){
+      switch(input$rb_acc,
+             "lim_internet" = lim_internet,
+             "place_access" = place_access,
+             "device_freq" = device_freq)
+  } 
+      else if(input$input_type == "ch2"){
+      switch(input$rb_digital,
+             "child_act" = child_act, 
+             "freq_act_dig" = freq_act_dig,
+             "website_dig" = website_dig,
+             "skill_conf_dig" = skill_conf_dig)
+      } 
+    else if(input$input_type == "ch3"){
+      switch(input$rb_risk,
+             "upset_lev" = upset_lev, 
+             "upset_freq" = upset_freq,
+             "means_exp" = means_exp,
+             "feeling_exp" = feeling_exp,
+             "means_sex" = means_sex,
+             "upset_lev_dis" = upset_lev_dis)
+    } 
+    else if(input$input_type == "ch4"){
+      switch(input$rb_parent,
+             "parent_aware" = parent_aware, 
+             "parent_med" = parent_med,
+             "proh_act" = proh_act,
+             "monitor" = monitor)
+    } 
+
           })
   
   # Table of selected dataset ----
@@ -765,7 +777,31 @@ a digital skill" = "skill_conf_dig"),
   )
   
   
-  
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "keyfindings.html",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "keyfindings.Rmd")
+      file.copy("keyfindings.Rmd", tempReport, overwrite = TRUE)
+      
+      # Set up parameters to pass to Rmd document
+      params <- list(n = input$slider)
+      
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport, output_file = file,
+                        params = params,
+                        envir = new.env(parent = globalenv())
+      )
+      
+      # copy generated report
+      file.copy(file, paste("rmd/", Sys.time(), ".html"))
+    }
+  )
   
   
   

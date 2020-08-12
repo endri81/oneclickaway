@@ -1,14 +1,15 @@
 ---
-output:
+title: "One Click Away"
+subtitle : "Children’s experience of Internet use in Albania"
+output: 
   html_document:
     toc: true
-    toc_float:
-      collapsed: false
-      smooth_scroll: false
-    theme: cerulean
-    highlight: espresso
+    toc_float: true
 ---
-# Key Findings
+
+
+
+
 
 ## Access to Internet
 
