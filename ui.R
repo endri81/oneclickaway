@@ -383,11 +383,13 @@ c("Parental active mediation as reported by children" = "parent_med",
                                         br(),
                                         br(),
                                            # This outputs the dynamic UI component
-                                           uiOutput("ui")
+                                           uiOutput("ui"),
+                                        # Button
+                                        downloadButton("downloadData", "Download")
                                         )),
                                         
                                         column(3,
-                                               tableOutput("table")
+                                               DT::dataTableOutput("table")
                                         )
                                      )
                                         

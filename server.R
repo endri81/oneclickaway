@@ -745,10 +745,16 @@ a digital skill" = "skill_conf_dig"),
           })
   
   # Table of selected dataset ----
-  output$table <- renderTable({
-    datasetInput()
-  })
-  
+
+  output$table <- DT::renderDataTable(
+    datasetInput(), options = list(
+      lengthChange = FALSE,
+      initComplete = JS(
+        "function(settings, json) {",
+        "$(this.api().table().header()).css({'background-color': '#42f', 'color': '#fff'});",
+        "}"),
+      autowidth = TRUE)
+  )
   # Downloadable csv of selected dataset ----
   output$downloadData <- downloadHandler(
     filename = function() {
