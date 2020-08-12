@@ -752,8 +752,7 @@ a digital skill" = "skill_conf_dig"),
       initComplete = JS(
         "function(settings, json) {",
         "$(this.api().table().header()).css({'background-color': '#42f', 'color': '#fff'});",
-        "}"),
-      autowidth = TRUE)
+        "}"))
   )
   # Downloadable csv of selected dataset ----
   output$downloadData <- downloadHandler(

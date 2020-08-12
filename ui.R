@@ -388,7 +388,7 @@ c("Parental active mediation as reported by children" = "parent_med",
                                         downloadButton("downloadData", "Download")
                                         )),
                                         
-                                        column(3,
+                                        column(8,
                                                DT::dataTableOutput("table")
                                         )
                                      )
