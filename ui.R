@@ -387,8 +387,7 @@ c("Parental active mediation as reported by children" = "parent_med",
                                         )),
                                         
                                         column(3,
-                                               tags$p("Dynamic input value:"),
-                                               verbatimTextOutput("dynamic_value")
+                                               tableOutput("table")
                                         )
                                      )
                                         

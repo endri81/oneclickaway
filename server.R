@@ -688,35 +688,77 @@ function(input, output, session) {
     # UI component and send it to the client.
     switch(input$input_type,
            "ch1" = radioButtons("rb_acc", "Access to Internet",
-                                choices = c("Option 1" = "option1",
-                                            "Option 2" = "option2"),
-                                selected = "option2"
+                                choices = c("Reasons for limited access to Internet" = "lim_internet",
+                                            "Places of Internet use" = "place_access",
+                                            "How often different devices are used to access the Internet " = "device_freq"
+                                            ),
+                                selected = "lim_internet"
            ),
            "ch2" = radioButtons("rb_digital", "Digital Skills",
-                                choices = c("Option 1" = "option1",
-                                            "Option 2" = "option2"),
-                                selected = "option2"
+                                choices = c("Websites or apps used by children" = "child_act",
+                                            "Frequency of activities practised weekly or more often" = "freq_act_dig",
+                                            "Most popular websites or apps among children" = "website_dig",
+                                            "Children and parents who report being fairly or very confident in
+a digital skill" = "skill_conf_dig"),
+                                selected = "child_act"
            ),
 
            "ch3" = radioButtons("rb_risk", "Online Risks",
-                                         choices = c("Option 1" = "option1",
-                                                     "Option 2" = "option2"),
+                                         choices = c("Children’s level of being upset by exposure to harmful content online" = "upset_lev",
+                                                     "How often children felt upset by hateful and degrading messages online" = "upset_freq",
+                                         "Ways in which children were exposed to sexual content" = "means_exp",
+                                         "How children felt after seeing sexual content online" = "feeling_exp",
+                                         "Means by which children saw sexual content online" = "means_sex",
+                                         "How children felt after seeing sexual content"= "upset_lev_dis"
+                                                     ),
                                          selected = "option2"
            ),
            "ch4" = radioButtons("rb_parent", "Parental mediation",
-                                choices = c("Option 1" = "option1",
-                                            "Option 2" = "option2"),
+                                choices = c("Parents’ awareness of children’s experience of online risks" = "parent_aware",
+                                            "Parental active mediation as reported by children" = "parent_med",
+                                            "Activities that parents prohibit their children from engaging in" = "proh_act",
+                                            "Parental monitoring activities practised often or very often" = "monitor"),
                                 selected = "option2"
            ))
   })
   
-  output$input_type_text <- renderText({
-    input$input_type
+  # Reactive value for selected dataset ----
+  datasetInput <- reactive({
+    if (input$input_type == "ch1" & input$rb_acc == "lim_internet") {lim_internet}
+    else if (input$input_type == "ch1" & input$rb_acc == "place_access") {place_access}  
+    else if (input$input_type == "ch1" & input$rb_acc == "place_access") {place_access} 
+    else if (input$input_type == "ch1" & input$rb_acc == "device_freq") {device_freq} 
+    else if (input$input_type == "ch2" & input$rb_digital == "child_act") {child_act} 
+    else if (input$input_type == "ch2" & input$rb_digital == "freq_act_dig") {freq_act_dig} 
+    else if (input$input_type == "ch2" & input$rb_digital == "website_dig") {website_dig} 
+    else if (input$input_type == "ch2" & input$rb_digital == "skill_conf_dig") {skill_conf_dig}  
+    else if (input$input_type == "ch3" & input$rb_risk == "upset_lev") {upset_lev} 
+    else if (input$input_type == "ch3" & input$rb_risk == "upset_freq") {upset_freq} 
+    else if (input$input_type == "ch3" & input$rb_risk == "means_exp") {means_exp}  
+    else if (input$input_type == "ch3" & input$rb_risk == "feeling_exp") {feeling_exp} 
+    else if (input$input_type == "ch3" & input$rb_risk == "means_sex") {means_sex} 
+    else if (input$input_type == "ch3" & input$rb_risk == "upset_lev_dis") {upset_lev_dis}  
+    else if (input$input_type == "ch4" & input$rb_parent == "parent_aware") {parent_aware}  
+    else if (input$input_type == "ch4" & input$rb_parent == "parent_med") {parent_med} 
+    else if (input$input_type == "ch4" & input$rb_parent == "proh_act") {proh_act} 
+    else if (input$input_type == "ch4" & input$rb_parent == "monitor") {monitor}  
+          })
+  
+  # Table of selected dataset ----
+  output$table <- renderTable({
+    datasetInput()
   })
   
-  output$dynamic_value <- renderPrint({
-    str(input$dynamic)
-  })
+  # Downloadable csv of selected dataset ----
+  output$downloadData <- downloadHandler(
+    filename = function() {
+      paste(input$dataset, ".csv", sep = "")
+    },
+    content = function(file) {
+      write.csv(datasetInput(), file, row.names = FALSE)
+    }
+  )
+  
   
   
   
