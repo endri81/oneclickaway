@@ -27,6 +27,9 @@ function(input, output, session) {
   observeEvent(input$jump_to_kfind, {
     updateTabsetPanel(session, "intabset", selected = "kfind")
   })
+  observeEvent(input$jump_to_method, {
+    updateTabsetPanel(session, "intabset", selected = "method")
+  })
   observeEvent(input$jump_to_data, {
     updateTabsetPanel(session, "intabset", selected = "data")
   })

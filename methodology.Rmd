@@ -1,0 +1,50 @@
+---
+title: ""
+output:
+  html_document:
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+    theme: cerulean
+    highlight: espresso
+---
+# Methodology
+
+A nationally representative sample of children of age 9–17 years
+and their parents or guardians was recruited. 
+
+The sample size was 1,000 and included both girls and boys. All children were  Internet users, defined as having used the Internet at least once in the three months prior to interview.
+
+The survey was based upon a stratified random national representative sample comprising three layers: county (qark), type of settlement (urban or rural), and child age group. 
+
+The sample design was based around the data from the 2011 Population Census. Sample allocation was undertaken proportional to the size of the strata: the number of children of age 9 to 17 years within each. 
+
+The total number of sampling locations was 106, and ten interviews per sampling point were conducted. The purpose of sample allocation was to optimise the sample plan and minimise sampling error (3.39). Within each household, a child was selected at random to participate in the survey.
+
+ Parents or guardians who participated in the survey were pre-selected in that the questionnaire was conducted with the parent who was most familiar with the child and his or her Internet use. Where both parents were equally familiar with the child’s Internet use, one was selected at random.
+
+ The data obtained were subsequently weighted, enabling harmonisation of the sample with the population, minimising distortions from non-responses and other non-sampling errors. 
+
+ A total of 39 interviewers and five supervisors participated in conducting the survey, undergoing training prior to the beginning of the fieldwork. Collecting of data began on 18 May and finished on 26 June 2018. The proportions of the different age groups, genders, regions and type of settlement in which the children are living are reported in Table 1, along with socio-economic data on the parents and guardians.
+
+The method of Computer-Assisted Personal Interviewing (CAPI) was used for data collection, where both children and parents answered a questionnaire on a tablet. All aspects of the methodology and approaches to survey implementation were developed with child well-being in mind. 
+
+Thus, the questionnaire was designed for self-administration, i.e. to be filled in without intervention from the interviewer. 
+
+However, if for some reason it was impossible for a child to complete these questionnaire modules on their own, then the interviewer would read them out, show the child the possible answers and give them the tablet. 
+
+This approach minimised any chance of the rights of the children being impacted in any way in the study, especially with regard to sensitive questions. Privacy of the child’s answers was absolutely guaranteed, and the child was allowed not to answer any question that he or she did not want to answer.
+
+The sections of the questionnaire that were self-administrated by the children included:
+
+ - risks   
+ - unwanted sexual experiences
+
+The sections of the questionnaire that the child could choose to fill out on their own or with the interviewer’s assistance included:
+
+  - opportunities and practices
+
+  - digital ecology, and
+
+  - skills

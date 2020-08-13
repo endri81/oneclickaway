@@ -181,20 +181,16 @@ what extent they mediate their children’s online experiences."
                              ),
                              #Methodology
                              div(
-                                class = "landing-page-box-about",
                                 div("Methodology", title =
                                        "Methodology", class = "landing-page-box-title"),
-                                div(class = "landing-page-about-icon", div(
-                                   img(src = "landing_button_other_profile.png", class = "centerabout")
-                                )),
-                                actionButton(
-                                   'jump_to_method',
-                                   'Methodology',
-                                   onclick =
-                                      "window.open('https://www.unicef.org/albania/documents/one-click-away', '_blank')",
-                                   class = "landing-page-button",
-                                   
-icon = icon("arrow-circle-right", "icon-lp")))),
+                                div(
+                                       lp_about_box(
+                                          image_name = "landing_button_related_links",
+                                          button_name = 'jump_to_method',
+                                          title_box = "Methodology",
+                                          description = 'Methodology'
+                                       )
+                                ))),
 column(4, class="landing-page-column", 
 
 #Bibliography
@@ -398,7 +394,17 @@ c("Parental active mediation as reported by children" = "parent_med",
                          ), #Tab panel bracket
                          ############## Methodology ----    
                          ###############################################.      
-                         tabPanel("Methodology", value = "method"), #Tab panel bracket
+                         tabPanel("Methodology", value = "method",
+                                  
+                                  
+                                  fluidPage( 
+                                     tags$iframe(src = './methodology.html', # put myMarkdown.html to /www
+                                                 width = '100%', height = '800px', 
+                                                 frameborder = 0, scrolling = 'no'
+                                     ))  
+                                  
+                                  
+                                  ), #Tab panel bracket
                         ###############################################.   
                          ###############################################.             
                          ##############Peers and community----    
