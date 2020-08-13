@@ -1,0 +1,9 @@
+---
+title: "Bibliography"
+output:
+  html_document:
+    theme: cerulean
+    highlight: espresso
+bibliography: bibliography.bib
+nocite: '@*'    
+---

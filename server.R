@@ -33,6 +33,12 @@ function(input, output, session) {
   observeEvent(input$jump_to_data, {
     updateTabsetPanel(session, "intabset", selected = "data")
   })
+  observeEvent(input$jump_to_biblio, {
+    updateTabsetPanel(session, "intabset", selected = "biblio")
+  })
+  observeEvent(input$jump_to_about, {
+    updateTabsetPanel(session, "intabset", selected = "about")
+  })
   ############################################### 
   ## Internet Access  ----  
   ###############################################.

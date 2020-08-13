@@ -194,7 +194,7 @@ what extent they mediate their children’s online experiences."
 column(4, class="landing-page-column", 
 
 #Bibliography
-lp_about_box(image_name= "child_identity", button_name = 'btn_indicator_updates', 
+lp_about_box(image_name= "child_identity", button_name = 'jump_to_biblio', 
 title_box = "Bibliography", 
 description = 'Bibliography'),
 
@@ -406,17 +406,28 @@ c("Parental active mediation as reported by children" = "parent_med",
                                   
                                   ), #Tab panel bracket
                         ###############################################.   
-                         ###############################################.             
-                         ##############Peers and community----    
+                         ##############Bibliography----    
                          ###############################################.
-                         tabPanel("Bibliography", value = "biblio"), #tabPanel bracket
+                         tabPanel("Bibliography", value = "biblio", 
+                                  fluidPage( 
+                                     tags$iframe(src = './biblio.html', # put myMarkdown.html to /www
+                                                 width = '100%', height = '800px', 
+                                                 frameborder = 0, scrolling = 'no'
+                                     ))  
+                                  
+                                  ),#tabPanel bracket
                          ############## Tour of the tool----    
                          ###############################################.
                          tabPanel("Tour of the tool", value = "tour"), #tab panel bracket
                          ###############################################.       
                          ## About ----
                          ###############################################.
-                         tabPanel("About", value = "about")#Tab panel
+                         tabPanel("About", value = "about",  description = 'About One Click Away',
+                                  fluidPage( 
+                                     tags$iframe(src = './about.html', # put myMarkdown.html to /www
+                                                 width = '100%', height = '800px', 
+                                                 frameborder = 0, scrolling = 'no'
+                                     )) ) #Tab panel
                          ###############################################.
               )# NavbarMenu bracket
    ), #Bracket  navbarPage

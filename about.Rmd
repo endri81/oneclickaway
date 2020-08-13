@@ -1,0 +1,17 @@
+---
+title: ""
+output:
+  html_document:
+    theme: cerulean
+    highlight: espresso
+---
+# About
+
+The rapid rise of the Internet started very early on an important debate about how the online world affects our lives, social skills and relationships. The Internet removes geographic barriers and brings everyone together regardless of their ability to be in the same specific physical place. The children of the 21st century are at the forefront of those who are affected by this remarkable shift. They are thriving, developing, learning and interacting online, perhaps even more so than in their offline settings. And so even if the Internet is expensive or unreliable or can only be accessed through shared devices or community provision, children are always finding ways to stay connected. As a result, the Internet has become a tool that, alongside all the benefits it brings, poses challenges to privacy, safety and security, which we need to be aware of and address timely.
+
+
+The present report—One Click Away—serves this purpose by gathering and presenting scientific evidence on how children use the Internet, what they are learning, the opportunities and risks they face and what parents know and don’t
+know about their children’s virtual reality.
+
+By aligning the research methodology with the Global Kids Online framework, UNICEF Albania also contributes to the global evidence generation on children’s online experiences and as such helps to shape tailored and strategic responses that will amplify the benefits of the Internet for children while minimizing the risks they
+may encounter. 
