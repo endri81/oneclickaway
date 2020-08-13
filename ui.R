@@ -153,8 +153,8 @@ what extent they mediate their children’s online experiences."
                                  ),
                                  lp_main_box(
                                     image_name = "landing_button_health_inequality",
-                                    button_name = 'jump_to_demo',
-                                    title_box = "Demography",
+                                    button_name = 'jump_to_parentchildren',
+                                    title_box = "Parents vs Children",
                                     description = 'Explore how an indicator varies with deprivation'
                                  )
                               )) #introBox 7 close
@@ -339,7 +339,31 @@ c("Parental active mediation as reported by children" = "parent_med",
               
               ## Demography ----
               ###############################################.
-              tabPanel("Demography", icon = icon("table"), value = "table"), #Tab panel bracket  
+              tabPanel("Parents vs Children", icon = icon("table"), value = "parentchildren",
+                       introBox(
+                          fluidPage(
+                             titlePanel("Parents vs Children"),
+                             sidebarLayout(
+                                sidebarPanel(
+                                   radioButtons("ind_parentchildren", "Choose indicator:",
+c("Children and parents who report being fairly or very confident in a digital skill " = "skill",
+  "Harmful online experiences according to parents and children " = "harm",
+  "Children’s time limits for Internet, according to children and parents" = "intlim",
+  "Parental controls over children’s Internet use, according to children and parents" = "control",
+  "How children are subject to parental monitoring" = "monitor")),
+                                   br(),
+                                   selectInput("btchparent", "Choose metrics:",
+                                               c("Parent" = "parent",
+                                                 "Children" = "children",
+                                                 "All" = "all"), width  ='60%'),
+                                   width = 5
+                                   
+                                ),
+                                mainPanel(
+                                   
+                                   plotOutput("chparentplot"),   width = 7))
+                             
+                          ))),#Tab panel bracket  
               
               ###############################################.             
               ##############NavBar Menu----

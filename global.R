@@ -157,6 +157,16 @@ monitor <- read_csv("data/monitor.csv")
 
 
 
+## Parents vs children
+
+harm_exp <- read_csv("data/harm_exp.csv", na = "0")
+int_limit_parent_child <- read_csv("data/int_limit_parent_child.csv", na = "0")
+parent_control <- read_csv("data/parent_control.csv", na = "0")
+parent_monitor <- read_csv("data/parent_monitor.csv", na = "0")
+
+
+
+
 
 
 

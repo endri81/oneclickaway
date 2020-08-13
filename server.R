@@ -39,6 +39,10 @@ function(input, output, session) {
   observeEvent(input$jump_to_about, {
     updateTabsetPanel(session, "intabset", selected = "about")
   })
+  observeEvent(input$jump_to_parentchildren, {
+    updateTabsetPanel(session, "intabset", selected = "parentchildren")
+  })
+  
   ############################################### 
   ## Internet Access  ----  
   ###############################################.
@@ -514,50 +518,50 @@ function(input, output, session) {
   data_parent <- reactive({
     # Return the appropriate data source depending on
     # the chosen radio button
-    if (input$ind_parent == "parent_med" & input$dissag_parent == "age_parent") {
+    if (input$ind_parent == "parent_med" & input$btchparent == "age_parent") {
       data_parent <- parent_med %>% select("Mediation", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
     } 
-    else if (input$ind_parent == "parent_med" & input$dissag_parent == "gender_parent") {
+    else if (input$ind_parent == "parent_med" & input$btchparent == "gender_parent") {
       data_parent <- parent_med %>% select("Mediation", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
     } 
-    else if (input$ind_parent == "parent_med" & input$dissag_parent == "total_parent") {
+    else if (input$ind_parent == "parent_med" & input$btchparent == "total_parent") {
       data_parent <- parent_med %>% select("Mediation", "Total")
     }
-    else if (input$ind_parent == "child_act" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "child_act" & input$btchparent == "age_parent") {
       data_parent <- child_act %>% select("Activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "child_act" & input$dissag_parent == "gender_parent") {
+    } else if (input$ind_parent == "child_act" & input$btchparent == "gender_parent") {
       data_parent <- child_act %>% select("Activity", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "child_act" & input$dissag_parent == "total_parent") {
+    } else if (input$ind_parent == "child_act" & input$btchparent == "total_parent") {
       data_parent <- child_act %>% select("Activity", "Total")
     }
-    else if (input$ind_parent == "proh_act" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "proh_act" & input$btchparent == "age_parent") {
       data_parent <- proh_act %>% select("Activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "proh_act" & input$dissag_parent == "gender_parent") {
+    } else if (input$ind_parent == "proh_act" & input$btchparent == "gender_parent") {
       data_parent <- proh_act %>% select("Activity", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "proh_act" & input$dissag_parent == "total_parent") {
+    } else if (input$ind_parent == "proh_act" & input$btchparent == "total_parent") {
       data_parent <- proh_act %>% select("Activity", "Total")
     }
-    else if (input$ind_parent == "monitor" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "monitor" & input$btchparent == "age_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "monitor" & input$dissag_parent == "gender_parent") {
+    } else if (input$ind_parent == "monitor" & input$btchparent == "gender_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "monitor" & input$dissag_parent == "total_parent") {
+    } else if (input$ind_parent == "monitor" & input$btchparent == "total_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", "Total")
     }
     
@@ -570,7 +574,7 @@ function(input, output, session) {
   
   
   output$parentplot <-renderPlot({
-    if (input$ind_parent == "parent_med" & input$dissag_parent == "age_parent") {
+    if (input$ind_parent == "parent_med" & input$btchparent == "age_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=age_value, y= Mediation, fill=age_group), position = "stack")+
         theme(legend.position = "none")    + 
@@ -580,7 +584,7 @@ function(input, output, session) {
       
       print(p1)
     }         
-    else if (input$ind_parent == "parent_med" & input$dissag_parent == "gender_parent") {
+    else if (input$ind_parent == "parent_med" & input$btchparent == "gender_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=gender_value, y= Mediation, fill=gender), position = "stack")+
         theme(legend.position = "none")    + 
@@ -589,7 +593,7 @@ function(input, output, session) {
         scale_fill_manual(values = pal_simd_bar)
       print(p1)
     }
-    else if (input$ind_parent == "parent_med" & input$dissag_parent == "total_parent") {
+    else if (input$ind_parent == "parent_med" & input$btchparent == "total_parent") {
       p <- ggplot(data = data_parent()) +
         geom_col(aes(x=Total, y= Mediation, fill = Total), position = "stack")+
         theme(legend.position = "none")    + 
@@ -598,7 +602,7 @@ function(input, output, session) {
         scale_color_manual(values = pal_simd_bar)
       print(p)
     }  
-    else if (input$ind_parent == "child_act" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "child_act" & input$btchparent == "age_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=age_value, y= Activity, fill=age_group), position = "stack")+
         theme(legend.position = "none")    + 
@@ -608,7 +612,7 @@ function(input, output, session) {
       
       print(p1)
     }         
-    else if (input$ind_parent == "child_act" & input$dissag_parent == "gender_parent") {
+    else if (input$ind_parent == "child_act" & input$btchparent == "gender_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=gender_value, y= Activity, fill=gender), position = "stack")+
         theme(legend.position = "none")    + 
@@ -617,7 +621,7 @@ function(input, output, session) {
         scale_fill_manual(values = pal_simd_bar)
       print(p1)
     }
-    else if (input$ind_parent == "child_act" & input$dissag_parent == "total_parent") {
+    else if (input$ind_parent == "child_act" & input$btchparent == "total_parent") {
       p <- ggplot(data = data_parent()) +
         geom_col(aes(x=Total, y= Activity, fill = Total), position = "stack")+
         theme(legend.position = "none")    + 
@@ -626,7 +630,7 @@ function(input, output, session) {
         scale_color_manual(values = pal_simd_bar)
       print(p)
     }  
-    else if (input$ind_parent == "proh_act" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "proh_act" & input$btchparent == "age_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=age_value, y= Activity, fill=age_group), position = "stack")+
         theme(legend.position = "none")    + 
@@ -636,7 +640,7 @@ function(input, output, session) {
       
       print(p1)
     }         
-    else if (input$ind_parent == "proh_act" & input$dissag_parent == "gender_parent") {
+    else if (input$ind_parent == "proh_act" & input$btchparent == "gender_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=gender_value, y= Activity, fill=gender), position = "stack")+
         theme(legend.position = "none")    + 
@@ -645,7 +649,7 @@ function(input, output, session) {
         scale_fill_manual(values = pal_simd_bar)
       print(p1)
     }
-    else if (input$ind_parent == "proh_act" & input$dissag_parent == "total_parent") {
+    else if (input$ind_parent == "proh_act" & input$btchparent == "total_parent") {
       p <- ggplot(data = data_parent()) +
         geom_col(aes(x=Total, y= Activity, fill = Total), position = "stack")+
         theme(legend.position = "none")    + 
@@ -654,7 +658,7 @@ function(input, output, session) {
         scale_color_manual(values = pal_simd_bar)
       print(p)
     }  
-    else if (input$ind_parent == "monitor" & input$dissag_parent == "age_parent") {
+    else if (input$ind_parent == "monitor" & input$btchparent == "age_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=age_value, y= Monitoring_activity, fill=age_group), position = "stack")+
         theme(legend.position = "none")    + 
@@ -664,7 +668,7 @@ function(input, output, session) {
       
       print(p1)
     }         
-    else if (input$ind_parent == "monitor" & input$dissag_parent == "gender_parent") {
+    else if (input$ind_parent == "monitor" & input$btchparent == "gender_parent") {
       p1 <- ggplot(data = data_parent()) +
         geom_col(aes(x=gender_value, y= Monitoring_activity, fill=gender), position = "stack")+
         theme(legend.position = "none")    + 
@@ -673,7 +677,7 @@ function(input, output, session) {
         scale_fill_manual(values = pal_simd_bar)
       print(p1)
     }
-    else if (input$ind_parent == "monitor" & input$dissag_parent == "total_parent") {
+    else if (input$ind_parent == "monitor" & input$btchparent == "total_parent") {
       p <- ggplot(data = data_parent()) +
         geom_col(aes(x=Total, y= Monitoring_activity, fill = Total), position = "stack")+
         theme(legend.position = "none")    + 
@@ -687,7 +691,8 @@ function(input, output, session) {
   })  
   
   
-## Data tab
+  # Data  ----  
+  ###############################################.
   
   output$ui <- renderUI({
     if (is.null(input$input_type))
@@ -731,7 +736,8 @@ a digital skill" = "skill_conf_dig"),
            ))
   })
   
-  # Reactive value for selected dataset ----
+
+  ### Reactive value for selected dataset ----
   datasetInput <- reactive({
     if (input$input_type == "ch1"){
       switch(input$rb_acc,
@@ -765,7 +771,7 @@ a digital skill" = "skill_conf_dig"),
 
           })
   
-  # Table of selected dataset ----
+  ### Table of selected dataset ----
 
   output$table <- DT::renderDataTable(
     datasetInput(), options = list(
@@ -775,7 +781,7 @@ a digital skill" = "skill_conf_dig"),
         "$(this.api().table().header()).css({'background-color': '#42f', 'color': '#fff'});",
         "}"))
   )
-  # Downloadable csv of selected dataset ----
+  ### Downloadable csv of selected dataset ----
   output$downloadData <- downloadHandler(
     filename = function() {
       paste(input$dataset, ".csv", sep = "")
@@ -830,6 +836,242 @@ a digital skill" = "skill_conf_dig"),
   
   
   
+  
+  
+  ## Parents vs Children tab  ----  
+  ###############################################.   
+  # Create a "data_source" reactive variable
+  chparent <- reactive({
+    # Return the appropriate data source depending on
+    # the chosen radio button
+    if (input$ind_parentchildren == "skill" & input$btchparent == "parent") {
+      chparent <- skill_conf_dig %>% select("Skill", "Parents")
+    } 
+    else if (input$ind_parentchildren == "skill" & input$btchparent == "children") {
+      chparent <- skill_conf_dig %>% select("Skill", "Children")
+      
+    } 
+    else if (input$ind_parentchildren == "skill" & input$btchparent == "all") {
+      chparent <- skill_conf_dig %>% select("Skill", "Parents", "Children") %>%
+        gather("Type", "Value", "Children", "Parents")
+    }
+    
+    else if (input$ind_parentchildren == "harm" & input$btchparent == "parent") {
+      chparent <- harm_exp %>% select("Experience", "Parents")
+    }
+    else if (input$ind_parentchildren == "harm" & input$btchparent == "children") {
+      chparent <- harm_exp %>% select("Experience", "Children")
+      
+    } 
+    else if (input$ind_parentchildren == "harm" & input$btchparent == "all") {
+      chparent <- harm_exp %>% select("Experience", "Parents", "Children") %>%
+        gather("Type", "Value", "Children", "Parents") 
+    }
+    else if (input$ind_parentchildren == "intlim" & input$btchparent == "parent") {
+      chparent <- int_limit_parent_child %>% select("Internet_limit", "Parents")
+      
+    } 
+
+    else if (input$ind_parentchildren == "intlim" & input$btchparent == "children") {
+      chparent <- int_limit_parent_child %>% select("Internet_limit", "Children") 
+      
+    } 
+    else if (input$ind_parentchildren == "intlim" & input$btchparent == "all") {
+      chparent <- int_limit_parent_child %>% select("Internet_limit", "Parents", "Children") %>%
+        gather("Type", "Value", "Children", "Parents") 
+      
+    } 
+    
+
+    else if (input$ind_parentchildren == "control" & input$btchparent == "parent") {
+      chparent <- parent_control %>% select("Parent_control", "Parents")
+      
+    } 
+    else if (input$ind_parentchildren == "control" & input$btchparent == "children") {
+      chparent <- parent_control %>% select("Parent_control", "Children")
+      
+    } 
+    else if (input$ind_parentchildren == "control" & input$btchparent == "all") {
+      
+      chparent <- parent_control %>% select("Parent_control", "Parents", "Children") %>%
+        gather("Type", "Value", "Children", "Parents")
+
+    }
+    
+    else if (input$ind_parentchildren == "monitor" & input$btchparent == "parent") {
+      chparent <- parent_monitor %>% select("Subject", "Parents")
+      
+    } 
+    else if (input$ind_parentchildren == "monitor" & input$btchparent == "children") {
+      chparent <- parent_monitor %>% select("Subject", "Children")
+      
+    } 
+    else if (input$ind_parentchildren == "monitor" & input$btchparent == "all") {
+      chparent <- parent_monitor %>% select("Subject", "Parents", "Children") %>%
+        gather("Type", "Value", "Children", "Parents")
+    }
+    
+ return(chparent)
+  })
+  
+  output$chparentplot <-renderPlot({
+    
+    if (input$ind_parentchildren == "skill" & input$btchparent == "parent") {
+    
+        p1 <- ggplot(data = chparent()) +
+        geom_col(aes(Parents, Skill, fill = "#0073C2FF"), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parents who report being fairly or very confident in a digital skill  (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      
+      print(p1)
+    }   
+    
+    else if (input$ind_parentchildren == "skill" & input$btchparent == "children") {
+    
+        p1 <- ggplot(data = chparent()) +
+        geom_col(aes(Children, Skill, fill = "#0073C2FF"), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children who report being fairly or very confident in a digital skill  (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    
+    else if (input$ind_parentchildren == "skill" & input$btchparent == "all") {
+    
+        p1 <- ggplot(data = chparent()) +
+        geom_col(aes(x=Value, y= Skill, fill = Type), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parents and children who report being fairly or very confident in a digital skill  (%)", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p1)
+    }  
+    
+    else if (input$ind_parentchildren == "harm" & input$btchparent == "parent") {
+      
+        p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Parents, Experience, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Harmful online experiences according to parents (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }         
+    else if (input$ind_parentchildren == "harm" & input$btchparent == "children") {
+      
+       p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Children, Experience, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Harmful online experiences according to parents (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_parentchildren == "harm"  & input$btchparent == "all") {
+        p1 <- ggplot(data = chparent()) +
+          geom_col(aes(x=Value, y= Experience, fill = Type), position = "stack")+
+          theme(legend.position = "none")    + 
+          labs(title = "Harmful online experiences according to parents and children (%)", 
+               x = NULL, y = NULL)  +
+          scale_color_manual(values = pal_simd_bar)
+        print(p1)
+    }  
+    
+    else if (input$ind_parentchildren == "intlim" & input$btchparent == "parent") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Parents, Internet_limit, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s time limits for Internet, according to parents (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }         
+    else if (input$ind_parentchildren == "intlim" & input$btchparent == "children") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Children, Internet_limit, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s time limits for Internet, according to children (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_parentchildren == "intlim"  & input$btchparent == "all") {
+      p1 <- ggplot(data = chparent()) +
+        geom_col(aes(x=Value, y= Internet_limit, fill = Type), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Children’s time limits for Internet, according to children and parents (%) ", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p1)
+    } 
+    else if (input$ind_parentchildren == "control" & input$btchparent == "parent") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Parents, Parent_control, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parental controls over children’s Internet use, according to parents (%) ", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }         
+    else if (input$ind_parentchildren == "control" & input$btchparent == "children") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Children, Parent_control, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parental controls over children’s Internet use, according to children (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_parentchildren == "control"  & input$btchparent == "all") {
+      p1 <- ggplot(data = chparent()) +
+        geom_col(aes(x=Value, y= Parent_control, fill = Type), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "Parental controls over children’s Internet use, according to children and parents (%) ", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p1)
+    } 
+    
+    else if (input$ind_parentchildren == "monitor" & input$btchparent == "parent") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Parents, Subject, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children are subject to parental monitoring, often or very often, according to parents (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }         
+    else if (input$ind_parentchildren == "monitor" & input$btchparent == "children") {
+      
+      p1 <- ggplot(data = chparent()) +
+        geom_bar(aes(Children, Subject, fill = "#0073C2FF"), stat = "identity", position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children are subject to parental monitoring, often or very often, according to children (%)", 
+             x = NULL, y = NULL)  +
+        scale_fill_manual(values = pal_simd_bar)
+      print(p1)
+    }
+    else if (input$ind_parentchildren == "monitor"  & input$btchparent == "all") {
+      p1 <- ggplot(data = chparent()) +
+        geom_col(aes(x=Value, y= Subject, fill = Type), position = "stack")+
+        theme(legend.position = "none")    + 
+        labs(title = "How children are subject to parental monitoring, often or very often, according to children and parents (%)", 
+             x = NULL, y = NULL)  +
+        scale_color_manual(values = pal_simd_bar)
+      print(p1)
+    } 
+    
+    
+  })  
+ 
   
   ############################################### 
   } #server closing bracket
