@@ -2,7 +2,7 @@
 #In this script include all the server side functions: plots, reactive objects, etc.
 
 ###############################################.
-
+shinyOptions(shiny.useragg = TRUE)
 ## Define a server for the Shiny app
 function(input, output, session) {
   
@@ -42,7 +42,11 @@ function(input, output, session) {
   observeEvent(input$jump_to_parentchildren, {
     updateTabsetPanel(session, "intabset", selected = "parentchildren")
   })
-  
+ ## IntroJS allow switching between tabs----
+  observeEvent(input$btn_landing, {
+   introjs(session,
+           events = list(onbeforechange = readCallback("switchTabs")))
+ })
   ############################################### 
   ## Internet Access  ----  
   ###############################################.
@@ -78,15 +82,15 @@ function(input, output, session) {
   })
   
 
-  output$accplot <-renderPlot({
+  output$accplot <-renderPlot(height = 400, width = 650,{
     if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
       {
       p <- ggplot(data = data_intacc()) +
       geom_col(aes(x=age_value, y=Reason, fill=age_group), position = "stack")+
       theme(legend.position = "none")    + 
       labs(title = "Reasons for limited access to Internet by child’s age (%)", 
-                                                                 x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+                                                                 x = NULL, y = NULL)  + 
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p)
       }         
@@ -96,7 +100,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Reasons for limited access to Internet by child’s gender(%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
      }
      else if (input$ind_access == "reason_access" & input$dissag_access == "total_access") {
@@ -114,7 +118,7 @@ function(input, output, session) {
     theme(legend.position = "none")    + 
     labs(title = "Places of Internet use, by child’s age (%)", 
          x = NULL, y = NULL)   +
-          scale_fill_manual(values = pal_simd_bar)
+          scale_fill_brewer(type = "qual", palette = "PRGn")
         print(p)
                  }
       else if (input$ind_access == "places_access" & input$dissag_access == "gender_access") {
@@ -123,7 +127,7 @@ function(input, output, session) {
            theme(legend.position = "none")    + 
            labs(title = "Places of Internet use, by child’s gender (%)", 
                 x = NULL, y = NULL)  +
-           scale_fill_manual(values = pal_simd_bar)
+           scale_fill_brewer(type = "qual", palette = "PRGn")
          print(p)
                  }
        else if (input$ind_access == "places_access" & input$dissag_access == "total_access") {
@@ -140,7 +144,7 @@ function(input, output, session) {
                     geom_col(aes(x=Value, y=Device, fill=Frequency), position = "stack")+
                     labs(title = "How often different devices are used to access the Internet (%)", 
                          x = NULL, y = NULL)  +
-                    scale_fill_manual(values = pal_simd_bar)
+                    scale_fill_brewer(type = "qual", palette = "PRGn")
                   print(p)
                 }
                    }) 
@@ -188,7 +192,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Websites or apps used by children, by age (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -198,7 +202,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Websites or apps used by children, by gender (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_digital == "web_digital" & input$dissag_digital == "total_digital") {
@@ -216,7 +220,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Frequency of activities practised weekly or more often, by age group (%)", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "gender_digital") {
@@ -225,7 +229,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Frequency of activities practised weekly or more often, by gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "total_digital") {
@@ -243,7 +247,7 @@ function(input, output, session) {
         theme(legend.position = "none") +   
         labs(title = "Children who report being fairly or very confident in a digital skill (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
   })   
@@ -332,7 +336,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Children’s level of being upset by exposure to harmful content online, by age (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -342,7 +346,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Children’s level of being upset by exposure to harmful content online, by gender (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_risk == "upset_level" & input$dissag_risk == "total_risk") {
@@ -360,7 +364,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "How often children felt upset by hateful and degrading messages online, by age (%)", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "gender_risk") {
@@ -369,7 +373,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "How often children felt upset by hateful and degrading messages online, by age gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "total_risk") {
@@ -387,7 +391,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Ways in which children were exposed to sexual content, by age (%) ", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "gender_risk") {
@@ -396,7 +400,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Ways in which children were exposed to sexual content, by gender (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "total_risk") {
@@ -414,7 +418,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "How children felt after seeing sexual content online, by gender (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "way_feel"  & input$dissag_risk == "total_risk") {
@@ -432,7 +436,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Means by which children saw sexual content online, by age (%)", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "means_sex"  & input$dissag_risk == "gender_risk") {
@@ -441,7 +445,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Means by which children saw sexual content online, by gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "means_sex"  & input$dissag_risk == "total_risk") {
@@ -459,7 +463,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "How children felt after seeing sexual content, by age (%)", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "gender_risk") {
@@ -468,7 +472,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "How children felt after seeing sexual content, by gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "total_risk") {
@@ -486,7 +490,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parents’ awareness of children’s experience of online risks, by child’s age (%)", 
              x = NULL, y = NULL)   +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "parent_aware"  & input$dissag_risk == "gender_risk") {
@@ -495,7 +499,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parents’ awareness of children’s experience of online risks, by child’s gender(%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p)
     }
     else if (input$ind_risk == "parent_aware"  & input$dissag_risk == "total_risk") {
@@ -580,7 +584,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parental active mediation as reported by children, by child’s age (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -590,7 +594,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parental active mediation as reported by children, by child’s gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parent == "parent_med" & input$btchparent == "total_parent") {
@@ -608,7 +612,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Activities that children can do at any time, by age (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -618,7 +622,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Activities that children can do at any time, by gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parent == "child_act" & input$btchparent == "total_parent") {
@@ -636,7 +640,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Activities that parents prohibit their children from engaging in, by child’s age (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -646,7 +650,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Activities that parents prohibit their children from engaging in, by child’s gender (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parent == "proh_act" & input$btchparent == "total_parent") {
@@ -664,7 +668,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parental monitoring activities practised often or very often, by child’s age (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }         
@@ -674,7 +678,7 @@ function(input, output, session) {
         theme(legend.position = "none")    + 
         labs(title = "Parental monitoring activities practised often or very often, by child’s gender (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parent == "monitor" & input$btchparent == "total_parent") {
@@ -923,7 +927,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Parents who report being fairly or very confident in a digital skill  (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       
       print(p1)
     }   
@@ -935,7 +939,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Children who report being fairly or very confident in a digital skill  (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     
@@ -957,7 +961,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Harmful online experiences according to parents (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }         
     else if (input$ind_parentchildren == "harm" & input$btchparent == "children") {
@@ -967,7 +971,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Harmful online experiences according to parents (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parentchildren == "harm"  & input$btchparent == "all") {
@@ -987,7 +991,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Children’s time limits for Internet, according to parents (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }         
     else if (input$ind_parentchildren == "intlim" & input$btchparent == "children") {
@@ -997,7 +1001,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Children’s time limits for Internet, according to children (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parentchildren == "intlim"  & input$btchparent == "all") {
@@ -1016,7 +1020,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Parental controls over children’s Internet use, according to parents (%) ", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }         
     else if (input$ind_parentchildren == "control" & input$btchparent == "children") {
@@ -1026,7 +1030,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "Parental controls over children’s Internet use, according to children (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parentchildren == "control"  & input$btchparent == "all") {
@@ -1046,7 +1050,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "How children are subject to parental monitoring, often or very often, according to parents (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }         
     else if (input$ind_parentchildren == "monitor" & input$btchparent == "children") {
@@ -1056,7 +1060,7 @@ a digital skill" = "skill_conf_dig"),
         theme(legend.position = "none")    + 
         labs(title = "How children are subject to parental monitoring, often or very often, according to children (%)", 
              x = NULL, y = NULL)  +
-        scale_fill_manual(values = pal_simd_bar)
+        scale_fill_brewer(type = "qual", palette = "PRGn")
       print(p1)
     }
     else if (input$ind_parentchildren == "monitor"  & input$btchparent == "all") {

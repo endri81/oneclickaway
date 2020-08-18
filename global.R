@@ -26,6 +26,14 @@ library(rintrojs) # for help intros
 library(rmarkdown) # for help intros
 library(knitr)
 library(knitrBootstrap)
+library(extrafont)
+loadfonts(device = "win")
+extrafont::loadfonts(device="win")
+library(ggplot2)
+library(thematic)
+thematic_on(
+  bg = "#2FA4E7", fg = "#FFFAFA", accent = "#0CE3AC", font = "auto")
+
 
 
 
@@ -82,29 +90,29 @@ lp_main_box <- function(title_box, image_name, button_name, description) {
       div(class = "landing-page-icon", style= paste0("background-image: url(", image_name, ".png);
           background-size: auto 80%; background-position: center; background-repeat: no-repeat; ")),
       actionButton(button_name, NULL, class="landing-page-button")
-      )
+  )
 }
 
 
 #Creating small boxes for further information in the landing page (see ui for formatting css)
 lp_about_box <- function(title_box, image_name, button_name, description) {
-
+  
   div(class="landing-page-box-about",
       div(title_box, class = "landing-page-box-title"),
       div(class = "landing-page-about-icon", style= paste0("background-image: url(", image_name, ".png);
           background-size: auto 80%; background-position: center; background-repeat: no-repeat; ")),
-          (actionButton(button_name, NULL,
-                   class="landing-page-button",
-                   icon = icon("arrow-circle-right", "icon-lp"),title=description)))
+      (actionButton(button_name, NULL,
+                    class="landing-page-button",
+                    icon = icon("arrow-circle-right", "icon-lp"),title=description)))
 }
 
 
-  
+
 ###############################################.
 ## Palettes ----
 ###############################################.   
 #Palette for SIMD.
-pal_simd_bar <- c('#01579B', '#0277BD', '#0288D1', '#039BE5', '#03A9F4', '#29B6F6', '#4FC3F7', '#81F4DA', '#B3E5FC')
+pal_simd_bar <- c("#DB5BFF", "#EFBDFF", "#1E90FF", "#14ADB4", "#ADD8E6", "#77DD77", "#83C442", "#A4D467", "#D9FFB1", "#FF5353", "#FF9933", "#FFC797", "#FDFD96")
 
 
 
@@ -163,7 +171,6 @@ harm_exp <- read_csv("data/harm_exp.csv", na = "0")
 int_limit_parent_child <- read_csv("data/int_limit_parent_child.csv", na = "0")
 parent_control <- read_csv("data/parent_control.csv", na = "0")
 parent_monitor <- read_csv("data/parent_monitor.csv", na = "0")
-
 
 
 

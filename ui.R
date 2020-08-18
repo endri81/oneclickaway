@@ -50,17 +50,6 @@ use of the Internet and generates and sustains a rigorous cross-national compara
 evidence base. In addition, the study explores the Internet use of parents and to
 what extent they mediate their children’s online experiences."
                              ),
-                             br(),
-                             h5("There are different ways to navigate around the tool."),
-                             h5(
-                                "Different visualisations can be opened using the menu bar (the blue strip) at the top of the screen."
-                             ),
-                             img(src = 'introjs_tabset_panel.PNG', width =
-                                    300),
-                             br(),
-                             h5(
-                                "The 'Home' option in the menu bar will return to the profiles tool homepage."
-                             ),
                              style = "color:0E3E5D; font-size:20px"
                           )
                        ),
@@ -78,11 +67,14 @@ what extent they mediate their children’s online experiences."
                                 image_name = "internet_access",
                                 button_name = 'jump_to_int_acc',
                                 title_box = "Internet Access",
-                                description = 'A high level view of an area across a set of indicators'
+                                description = 'How children access the Internet'
                              ),
                              data.step = 2,
                              data.intro = h5(
-                                "The profile summary allows you to look at multiple indicators within an area at the same time"
+                                "This section describes how children access the Internet, when they first start using
+it, the devices they use most often to get online, where they usually access the
+Internet, how much time they spend online, and any difficulties and restrictions they
+might face when trying to do so."
                              ),
                              data.position = "bottom-right-aligned"
                           )
@@ -99,10 +91,13 @@ what extent they mediate their children’s online experiences."
                                 image_name = "online_act",
                                 button_name = 'jump_to_digital',
                                 title_box = "Digital Skills",
-                                description = 'View and download the data behind the tool'
+                                description = 'Online activities children like'
                              ),
-                             data.step = 6,
-                             data.intro = h5("The 'Data' window can be used to filter and download profiles data")
+                             data.step = 3,
+                             data.intro = h5("Here we show how children use the Internet, which activities they practise
+online and the applications and websites they like and visit more often. It also looks
+at children’s and parents’ online competencies, in terms of what they feel they are
+good at online and what they find difficult.")
                           )
                        )
                     ),
@@ -113,61 +108,72 @@ what extent they mediate their children’s online experiences."
                        column(
                           8,
                           style = "padding-left: 0px; padding-right: 0px;",
-                          introBox(
-                             #tour of the rank and trend tabs
-                             data.step = 3,
-                             data.intro = h5(
-                                "The trend and rank charts allow detailed exploration of one indicator at a time."
-                             ),
-                             #Trend plot box
+
+                             #Online Risks
                              column(
                                 6,
                                 class = "landing-page-column",
+                                introBox(
+                                   #tour of the rank and trend tabs
+                                   data.step = 4,
+                                   data.intro = h5(
+                                      "Here we explore the risks related to potentially harmful
+content and contact with people through the Internet, such as talking to strangers
+online or meeting face-to-face people who were first encountered in the digital space"
+                                   ),
                                 lp_main_box(
                                    image_name = "online_risk",
                                    button_name = 'jump_to_risk',
                                    title_box = "Online Risks",
-                                   description = 'Look at how an indicator changes over time'
-                                )
+                                   description = 'Risks related to internet use'
+                                ))
                              ),
                              #Rank/map plot box
                              column(
                                 6,
                                 class = "landing-page-column",
+                                introBox(
+                                   #tour of the rank and trend tabs
+                                   data.step = 5,
+                                   data.intro = h5(
+                                      "This section describes the importance of parents in children’s well-being and online
+safety. As parents are the ones generally expected to both enable their children’s
+Internet use and protect them from harm, particular attention is given to the way in
+which the children’s experiences of the Internet are mediated. "
+                                   ),
                                 lp_main_box(
                                    image_name = "parent_mediation",
                                    button_name = 'jump_to_parent',
                                    title_box = "Parental mediation",
-                                   description = 'Compare geographical variation for an indicator'
-                                )
-                             )
-                          )
-                       ),
+                                   description = 'Importance of parents in children wellbeing'
+                                ))
+                             )),
                        #introBox 3 close
                        #Inequalities box
                        column(4, class = "landing-page-column",
                               introBox(
-                                 data.step = 7,
+                                 data.step = 6,
                                  data.intro = h5(
-                                    "The inequalities module allows exploration of deprivation effects for a selection of indicators from the main profiles tool."
+                                    "Here we compare some of the results, based on the perceptions
+of children and parents for different study parts."
                                  ),
                                  lp_main_box(
                                     image_name = "landing_button_health_inequality",
                                     button_name = 'jump_to_parentchildren',
                                     title_box = "Parents vs Children",
-                                    description = 'Explore how an indicator varies with deprivation'
+                                    description = 'Perceptions of children and parents'
                                  )
-                              )) #introBox 7 close
-                    ),
+                              ) #introBox 7 close
+                    )),
                     # fluid row close
                     # end of landing page second row
                     # third row of landing page
                     fluidRow(
                        introBox(
-                          data.step = 8,
+                          data.step = 7,
                           # tour around the tool
                           data.intro = h5(
-                             "There are also options to find out information such as detailed descriptions of the profile indicators, indicator update schedules and links to evidence for action briefings"
+                             "There are also options to find out information such as key findings, methodology, bibliography or download data"
                           ),
                           #Key Findings
                           column(
@@ -184,38 +190,43 @@ what extent they mediate their children’s online experiences."
                                 div("Methodology", title =
                                        "Methodology", class = "landing-page-box-title"),
                                 div(
-                                       lp_about_box(
-                                          image_name = "landing_button_related_links",
-                                          button_name = 'jump_to_method',
-                                          title_box = "Methodology",
-                                          description = 'Methodology'
-                                       )
+                                   lp_about_box(
+                                      image_name = "landing_button_related_links",
+                                      button_name = 'jump_to_method',
+                                      title_box = "Methodology",
+                                      description = 'Methodology'
+                                   )
                                 ))),
-column(4, class="landing-page-column", 
-
-#Bibliography
-lp_about_box(image_name= "child_identity", button_name = 'jump_to_biblio', 
-title_box = "Bibliography", 
-description = 'Bibliography'),
-
-#Evidence
-lp_about_box(image_name= "landing_button_resources", button_name = 'jump_to_evidence', 
-title_box = "Evidence for Action", 
-description = 'Evidence for Action')),
-column(4, class="landing-page-column",
-
-#Data
-lp_about_box(image_name= "landing_button_data_table",
-button_name = 'jump_to_data', title_box = "Data", 
-description = 'Find out about data used'),
-                                          
-#About
+                          column(4, class="landing-page-column", 
+ #Bibliography
+                                 lp_about_box(image_name= "child_identity", button_name = 'jump_to_biblio', 
+                                              title_box = "Bibliography", 
+                                              description = 'Bibliography'),
+                                 
+                                 #Evidence
+                                 lp_about_box(image_name= "landing_button_resources", button_name = 'jump_to_evidence', 
+                                              title_box = "Evidence for Action", 
+                                              description = 'Evidence for Action')),
+                          
+ 
+ column(4, class="landing-page-column",
+                                 
+                                 #Data
+                                 lp_about_box(image_name= "landing_button_data_table",
+                                              button_name = 'jump_to_data', title_box = "Data", 
+                                              description = 'Find out about data used'),
+                                 
+                                 #About
 lp_about_box(image_name= "landing_button_about_2", button_name = 'jump_to_about', 
-title_box = "About", description = 'About dashboard One Click Away'))
-                              ) #Close IntroBox
-                           )#Fluidrow bracket
-                 ) #main Panel bracket
-              ),# tab panel bracket
+title_box = "About", description = 'About dashboard One Click Away')
+
+ )
+
+)
+
+)#Fluidrow bracket
+                       ) #main Panel bracket
+                    ),# tab panel bracket
               ###############################################.
               ## Access to Internet ----
               ###############################################.
@@ -225,23 +236,23 @@ title_box = "About", description = 'About dashboard One Click Away'))
                              titlePanel("Access to Internet"),
                              sidebarLayout(
                                 sidebarPanel(
-                                    radioButtons("ind_access", "Choose indicator:",
-  c("Reasons for limited access to Internet" = "reason_access",
-     "Places of Internet use" = "places_access",
-     "Internet access frequency on different devices" = "freq_access")),
-  br(),
-  selectInput("dissag_access", "Choose metrics:",
-              c("By age" = "age_access",
-                "By gender" = "gender_access",
-                "Total" = "total_access"), width  ='60%'),
-  width = 4
-                                    
-                                    ),
-  mainPanel(
-
-                                    plotOutput("accplot"),   width = 8))
-     
-                                 ))
+                                   radioButtons("ind_access", "Choose indicator:",
+                                                c("Reasons for limited access to Internet" = "reason_access",
+                                                  "Places of Internet use" = "places_access",
+                                                  "Internet access frequency on different devices" = "freq_access")),
+                                   br(),
+                                   selectInput("dissag_access", "Choose metrics:",
+                                               c("By age" = "age_access",
+                                                 "By gender" = "gender_access",
+                                                 "Total" = "total_access"), width  ='60%'),
+                                   width = 4
+                                   
+                                ),
+                                mainPanel(
+                                   
+                                   plotOutput("accplot"),   width = 8))
+                             
+                          ))
                        
               ), #Tab panel bracket
               
@@ -254,10 +265,10 @@ title_box = "About", description = 'About dashboard One Click Away'))
                              titlePanel("Online activities and digital skills"),
                              sidebarLayout(
                                 sidebarPanel(
-            radioButtons("ind_digital", "Choose indicator:",
-            c("Websites or apps used by children" = "web_digital",
-             "Frequency of activities practised weekly or more often" = "freq_act_dig",
-             "Children confidence in a digital skill" = "conf_digital")),
+                                   radioButtons("ind_digital", "Choose indicator:",
+                                                c("Websites or apps used by children" = "web_digital",
+                                                  "Frequency of activities practised weekly or more often" = "freq_act_dig",
+                                                  "Children confidence in a digital skill" = "conf_digital")),
                                    br(),
                                    selectInput("dissag_digital", "Choose metrics:",
                                                c("By age" = "age_digital",
@@ -277,48 +288,48 @@ title_box = "About", description = 'About dashboard One Click Away'))
               ## Online risks ---- 
               ###############################################.
               tabPanel("Online risks", icon = icon("signal"), value = "risk", #Tab panel bracket
-              introBox(
-                 fluidPage(
-                    titlePanel("Online risks and potential harm"),
-                    sidebarLayout(
-                       sidebarPanel(
-                          radioButtons("ind_risk", "Choose indicator:",
-c("Children’s level of being upset by exposure to harmful content online" = "upset_level",
-"How often children felt upset by hateful and degrading messages online" = "upset_freq",
-"Ways in which children were exposed to sexual content" = "ways_exp",
-"How children felt after seeing sexual content online" = "way_feel",
-"Means by which children saw sexual content online" = "means_sex",
-"Children level of feeling upset after seeing sexual content"= "upset_level_sex",
-"Parents’ awareness of children’s experience of online risks" = "parent_aware"
-)),
-                          br(),
-                          selectInput("dissag_risk", "Choose metrics:",
-                                      c("By age" = "age_risk",
-                                        "By gender" = "gender_risk",
-                                        "Total" = "total_risk"), width  ='60%'),
-                          width = 5
-                          
-                       ),
-                       mainPanel(
-                          
-                          plotOutput("riskplot"),   width = 7))
-                    
-                 ))
-
-), #Tab panel bracket
+                       introBox(
+                          fluidPage(
+                             titlePanel("Online risks and potential harm"),
+                             sidebarLayout(
+                                sidebarPanel(
+                                   radioButtons("ind_risk", "Choose indicator:",
+                                                c("Children’s level of being upset by exposure to harmful content online" = "upset_level",
+                                                  "How often children felt upset by hateful and degrading messages online" = "upset_freq",
+                                                  "Ways in which children were exposed to sexual content" = "ways_exp",
+                                                  "How children felt after seeing sexual content online" = "way_feel",
+                                                  "Means by which children saw sexual content online" = "means_sex",
+                                                  "Children level of feeling upset after seeing sexual content"= "upset_level_sex",
+                                                  "Parents’ awareness of children’s experience of online risks" = "parent_aware"
+                                                )),
+                                   br(),
+                                   selectInput("dissag_risk", "Choose metrics:",
+                                               c("By age" = "age_risk",
+                                                 "By gender" = "gender_risk",
+                                                 "Total" = "total_risk"), width  ='60%'),
+                                   width = 5
+                                   
+                                ),
+                                mainPanel(
+                                   
+                                   plotOutput("riskplot"),   width = 7))
+                             
+                          ))
+                       
+              ), #Tab panel bracket
               ## Parental mediation ---- 
               ###############################################.
               tabPanel("Parental mediation", icon = icon("balance-scale"), value = "parent", #Tab panel bracket
                        introBox(
                           fluidPage(
-titlePanel("Parental mediation of children’s online experience"),
+                             titlePanel("Parental mediation of children’s online experience"),
                              sidebarLayout(
                                 sidebarPanel(
                                    radioButtons("ind_parent", "Choose indicator:",
-c("Parental active mediation as reported by children" = "parent_med",
-"Activities that children can do at any time" = "child_act",
-"Activities that parents prohibit their children from engaging in" = "proh_act",
-"Parental monitoring activities practised often or very often" = "monitor"
+                                                c("Parental active mediation as reported by children" = "parent_med",
+                                                  "Activities that children can do at any time" = "child_act",
+                                                  "Activities that parents prohibit their children from engaging in" = "proh_act",
+                                                  "Parental monitoring activities practised often or very often" = "monitor"
                                                 )),
                                    br(),
                                    selectInput("dissag_parent", "Choose metrics:",
@@ -346,11 +357,11 @@ c("Parental active mediation as reported by children" = "parent_med",
                              sidebarLayout(
                                 sidebarPanel(
                                    radioButtons("ind_parentchildren", "Choose indicator:",
-c("Children and parents who report being fairly or very confident in a digital skill " = "skill",
-  "Harmful online experiences according to parents and children " = "harm",
-  "Children’s time limits for Internet, according to children and parents" = "intlim",
-  "Parental controls over children’s Internet use, according to children and parents" = "control",
-  "How children are subject to parental monitoring" = "monitor")),
+                                                c("Children and parents who report being fairly or very confident in a digital skill " = "skill",
+                                                  "Harmful online experiences according to parents and children " = "harm",
+                                                  "Children’s time limits for Internet, according to children and parents" = "intlim",
+                                                  "Parental controls over children’s Internet use, according to children and parents" = "control",
+                                                  "How children are subject to parental monitoring" = "monitor")),
                                    br(),
                                    selectInput("btchparent", "Choose metrics:",
                                                c("Parent" = "parent",
@@ -374,16 +385,16 @@ c("Children and parents who report being fairly or very confident in a digital s
                          ## Key Findings ----
                          ###############################################.
                          tabPanel("Key Findings", value = "kfind",
-
+                                  
                                   fluidPage( 
                                      tags$iframe(src = './keyfindings.html', # put myMarkdown.html to /www
                                                  width = '100%', height = '800px', 
                                                  frameborder = 0, scrolling = 'no'
                                      ))                              
-                                 
-              ), #Tab panel bracket   
+                                  
+                         ), #Tab panel bracket   
                          ###############################################.             
-                        ##############Data----    
+                         ##############Data----    
                          ###############################################. 
                          tabPanel("Data", value = "data",
                                   fluidPage(
@@ -395,26 +406,26 @@ c("Children and parents who report being fairly or very confident in a digital s
                                         column(3, wellPanel(
                                            selectInput("input_type", "Choose study chapter",
                                                        c( "Access to Internet" = "ch1",
-                                                         "Digital Skills" = "ch2",
-                                                         "Online risks" = "ch3",
-                                                         "Parental mediation" = "ch4")
+                                                          "Digital Skills" = "ch2",
+                                                          "Online risks" = "ch3",
+                                                          "Parental mediation" = "ch4")
                                            ),
-                                        br(),
-                                        br(),
+                                           br(),
+                                           br(),
                                            # This outputs the dynamic UI component
                                            uiOutput("ui"),
-                                        # Button
-                                        downloadButton("downloadData", "Download")
+                                           # Button
+                                           downloadButton("downloadData", "Download")
                                         )),
                                         
                                         column(8,
                                                DT::dataTableOutput("table")
                                         )
                                      )
-                                        
-                                     )
-
-                                 
+                                     
+                                  )
+                                  
+                                  
                          ), #Tab panel bracket
                          ############## Methodology ----    
                          ###############################################.      
@@ -428,8 +439,8 @@ c("Children and parents who report being fairly or very confident in a digital s
                                      ))  
                                   
                                   
-                                  ), #Tab panel bracket
-                        ###############################################.   
+                         ), #Tab panel bracket
+                         ###############################################.   
                          ##############Bibliography----    
                          ###############################################.
                          tabPanel("Bibliography", value = "biblio", 
@@ -439,7 +450,7 @@ c("Children and parents who report being fairly or very confident in a digital s
                                                  frameborder = 0, scrolling = 'no'
                                      ))  
                                   
-                                  ),#tabPanel bracket
+                         ),#tabPanel bracket
                          ############## Tour of the tool----    
                          ###############################################.
                          tabPanel("Tour of the tool", value = "tour"), #tab panel bracket
