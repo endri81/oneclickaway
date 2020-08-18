@@ -4,6 +4,11 @@ form-group.shiny-input-container {
     margin-bottom: 0;
 }
 
+modeBarStyle: {
+        orientation: 'h';
+        position: 'bottom'
+    }
+    
 /* to avoid red text error messages in the whole app, take out for testing*/
 .shiny-output-error { visibility: hidden; }
 .shiny-output-error:before { visibility: hidden; }

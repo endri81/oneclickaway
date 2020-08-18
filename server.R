@@ -82,70 +82,145 @@ function(input, output, session) {
   })
   
 
-  output$accplot <-renderPlot(height = 400, width = 650,{
-    if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
+  output$accplot <-renderPlotly({
+    
+if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
       {
-      p <- ggplot(data = data_intacc()) +
-      geom_col(aes(x=age_value, y=Reason, fill=age_group), position = "stack")+
-      theme(legend.position = "none")    + 
-      labs(title = "Reasons for limited access to Internet by child’s age (%)", 
-                                                                 x = NULL, y = NULL)  + 
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      
-      print(p)
+  fig <- plot_ly(data = data_intacc(),
+                 x = ~age_value, 
+                 y = ~Reason, 
+                 type = 'bar', 
+                 color = ~age_group,
+                 colors = brewer.pal(n = 3, "Paired"))%>%
+       layout(title="Reasons for limited access to Internet by age(%)",
+      yaxis=list(title = "Reason"),
+      xaxis=list(title = "Responders"),
+      barmode= "stack") %>% config(displaylogo = FALSE,
+                                   modeBarButtonsToRemove = list(
+                                     'sendDataToCloud',
+                                     'autoScale2d',
+                                     'resetScale2d',
+                                     'hoverClosestCartesian',
+                                     'hoverCompareCartesian'
+                                   ))
+
       }         
      else if (input$ind_access == "reason_access" & input$dissag_access == "gender_access") {
-      p <- ggplot(data = data_intacc()) +
-      geom_col(aes(x=gender_value, y=Reason, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Reasons for limited access to Internet by child’s gender(%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+       fig <- plot_ly(data = data_intacc(),
+                      x = ~gender_value, 
+                      y = ~Reason, 
+                      type = 'bar', 
+                      color = ~gender,
+                      colors = brewer.pal(n = 2, "Paired")) %>%
+         layout(title="Reasons for limited access to Internet by gender(%)",
+                yaxis=list(title = "Reason"),
+                xaxis=list(title = "Responders"),
+                barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
      }
      else if (input$ind_access == "reason_access" & input$dissag_access == "total_access") {
-       p <- ggplot(data = data_intacc()) +
-         geom_col(aes(x=Total, y=Reason, fill = Total), position = "stack")+
-         theme(legend.position = "none")    + 
-         labs(title = "Reasons for limited access to Internet(%)", 
-              x = NULL, y = NULL)  +
-         scale_color_manual(values = pal_simd_bar)
-       print(p)
+       fig <- plot_ly(data = data_intacc(),
+                      x = ~Total, 
+                      y = ~Reason, 
+                      type = 'bar', 
+                      color = ~Total,
+                      colors = brewer.pal(n = 10, "Paired"))%>%
+         layout(title="Reasons for limited access to Internet (%)",
+                yaxis=list(title = "Reason"),
+                xaxis=list(title = "Responders"),
+                barmode= "stack") %>% config(displaylogo = FALSE,
+                                             modeBarButtonsToRemove = list(
+                                               'sendDataToCloud',
+                                               'autoScale2d',
+                                               'resetScale2d',
+                                               'hoverClosestCartesian',
+                                               'hoverCompareCartesian'
+                                             ))
                  }   
       else if (input$ind_access == "places_access" & input$dissag_access == "age_access") {
-        p <- ggplot(data = data_intacc()) +
-          geom_col(aes(x=age_value, y=Place, fill=age_group), position = "stack")+
-    theme(legend.position = "none")    + 
-    labs(title = "Places of Internet use, by child’s age (%)", 
-         x = NULL, y = NULL)   +
-          scale_fill_brewer(type = "qual", palette = "PRGn")
-        print(p)
+        fig <- plot_ly(data = data_intacc(),
+                       x = ~age_value, 
+                       y = ~Place, 
+                       type = 'bar', 
+                       color = ~age_group,
+                       colors = brewer.pal(n = 3, "Paired"))%>%
+          layout(title="Places of Internet use, by child’s age (%)",
+                 yaxis=list(title = "Place"),
+                 xaxis=list(title = "Responders"),
+                 barmode= "stack") %>% config(displaylogo = FALSE,
+                                              modeBarButtonsToRemove = list(
+                                                'sendDataToCloud',
+                                                'autoScale2d',
+                                                'resetScale2d',
+                                                'hoverClosestCartesian',
+                                                'hoverCompareCartesian'
+                                              ))
                  }
       else if (input$ind_access == "places_access" & input$dissag_access == "gender_access") {
-         p <- ggplot(data = data_intacc()) +
-         geom_col(aes(x=gender_value, y=Place, fill=gender), position = "stack")+
-           theme(legend.position = "none")    + 
-           labs(title = "Places of Internet use, by child’s gender (%)", 
-                x = NULL, y = NULL)  +
-           scale_fill_brewer(type = "qual", palette = "PRGn")
-         print(p)
+        fig <- plot_ly(data = data_intacc(),
+                       x = ~gender_value, 
+                       y = ~Place, 
+                       type = 'bar', 
+                       color = ~gender,
+                       colors = brewer.pal(n = 2, "Paired"))%>%
+          layout(title="Places of Internet use, by child’s gender (%)",
+                 yaxis=list(title = "Place"),
+                 xaxis=list(title = "Responders"),
+                 barmode= "stack") %>% config(displaylogo = FALSE,
+                                              modeBarButtonsToRemove = list(
+                                                'sendDataToCloud',
+                                                'autoScale2d',
+                                                'resetScale2d',
+                                                'hoverClosestCartesian',
+                                                'hoverCompareCartesian'
+                                              ))
                  }
        else if (input$ind_access == "places_access" & input$dissag_access == "total_access") {
-         p <- ggplot(data = data_intacc()) +
-         geom_col(aes(x=Total, y=Place, fill = Total), position = "stack")+
-           theme(legend.position = "none")    + 
-           labs(title = "Places of Internet use (%)", 
-                x = NULL, y = NULL)  +
-           scale_color_manual(values = pal_simd_bar)
-         print(p)
+         fig <- plot_ly(data = data_intacc(),
+                        x = ~Total, 
+                        y = ~Place, 
+                        type = 'bar', 
+                        color = ~Total,
+                        colors = brewer.pal(n = 10, "Paired"))%>%
+           layout(title="Places of Internet use (%)",
+                  yaxis=list(title = "Place"),
+                  xaxis=list(title = "Responders"),
+                  barmode= "stack") %>% config(displaylogo = FALSE,
+                                               modeBarButtonsToRemove = list(
+                                                 'sendDataToCloud',
+                                                 'autoScale2d',
+                                                 'resetScale2d',
+                                                 'hoverClosestCartesian',
+                                                 'hoverCompareCartesian'
+                                               ))
                 }   
-                else if (input$ind_access == "freq_access") {   
-                  p <- ggplot(data = data_intacc()) +
-                    geom_col(aes(x=Value, y=Device, fill=Frequency), position = "stack")+
-                    labs(title = "How often different devices are used to access the Internet (%)", 
-                         x = NULL, y = NULL)  +
-                    scale_fill_brewer(type = "qual", palette = "PRGn")
-                  print(p)
+                else if (input$ind_access == "freq_access") {
+                  shinyjs::hide("dissag_access")
+                  fig <- plot_ly(data = data_intacc(),
+                                 x = ~Value, 
+                                 y = ~Device, 
+                                 type = 'bar', 
+                                 color = ~Value,
+                                 colors = brewer.pal(n = 5, "Paired"))%>%
+                    layout(title="How often different devices are used to access the Internet (%)",
+                           yaxis=list(title = "Frequency"),
+                           xaxis=list(title = "Responders"),
+                           barmode= "stack") %>% config(displaylogo = FALSE,
+                                                        modeBarButtonsToRemove = list(
+                                                          'sendDataToCloud',
+                                                          'autoScale2d',
+                                                          'resetScale2d',
+                                                          'hoverClosestCartesian',
+                                                          'hoverCompareCartesian'
+                                                        ))
+                  
+
                 }
                    }) 
   
@@ -184,71 +259,144 @@ function(input, output, session) {
   })
   
   
-  output$digplot <-renderPlot({
+  output$digplot <- renderPlotly({
+    
     if (input$ind_digital == "web_digital" & input$dissag_digital == "age_digital")
     {
-      p1 <- ggplot(data = data_digital()) +
-        geom_col(aes(x=age_value, y= Website_app, fill=age_group), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Websites or apps used by children, by age (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      
-      print(p1)
+      fig <- plot_ly(data = data_digital(),
+                     x = ~age_value, 
+                     y = ~Website_app, 
+                     type = 'bar', 
+                     color = ~age_group,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="Websites or apps used by children, by age (%)",
+               yaxis=list(title = "Websites or apps"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
+
     }         
-    else if (input$ind_digital == "web_digital" & input$dissag_digital == "gender_digital") {
-      p1 <- ggplot(data = data_digital()) +
-        geom_col(aes(x=gender_value, y= Website_app, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Websites or apps used by children, by gender (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+   else if (input$ind_digital == "web_digital" & input$dissag_digital == "gender_digital")
+   {
+    fig <- plot_ly(data = data_digital(),
+                   x = ~gender_value, 
+                   y = ~Website_app, 
+                   type = 'bar', 
+                   color = ~gender,
+                   colors = brewer.pal(n = 2, "Paired")) %>%
+      layout(title="Websites or apps used by children, by gender (%)",
+             yaxis=list(title = "Websites or apps"),
+             xaxis=list(title = "Responders"),
+             barmode= "stack") %>% config(displaylogo = FALSE,
+                                          modeBarButtonsToRemove = list(
+                                            'sendDataToCloud',
+                                            'autoScale2d',
+                                            'resetScale2d',
+                                            'hoverClosestCartesian',
+                                            'hoverCompareCartesian'
+                                          ))
     }
     else if (input$ind_digital == "web_digital" & input$dissag_digital == "total_digital") {
-      p <- ggplot(data = data_digital()) +
-        geom_col(aes(x=Total, y= Website_app, fill = Total), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Websites or apps used by children(%) ", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p)
+      fig <- plot_ly(data = data_digital(),
+                     x = ~Total, 
+                     y = ~Website_app, 
+                     type = 'bar', 
+                     color = ~Total,
+                     colors = brewer.pal(n = 10, "Paired")) %>%
+        layout(title="Websites or apps used by children",
+               yaxis=list(title = "Websites or apps"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }   
     else if (input$ind_digital == "freq_act_digs" & input$dissag_digital == "age_digital") {
-      p <- ggplot(data = data_digital()) +
-        geom_col(aes(x=age_value, y= Activity, fill=age_group), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Frequency of activities practised weekly or more often, by age group (%)", 
-             x = NULL, y = NULL)   +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+                           fig <- plot_ly(data = data_digital(),
+                            x = ~age_value, 
+                            y = ~Activity, 
+                            type = 'bar', 
+                            color = ~age_group,
+                            colors = brewer.pal(n = 3, "Paired")) %>%
+               layout(title="Frequency of activities practised weekly or more often, by age group (%)",
+                      yaxis=list(title = "Websites or apps"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }
     else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "gender_digital") {
-      p <- ggplot(data = data_digital()) +
-        geom_col(aes(x=gender_value, y=Activity, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Frequency of activities practised weekly or more often, by gender (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+      fig <- plot_ly(data = data_digital(),
+                     x = ~gender_value, 
+                     y = ~Activity, 
+                     type = 'bar', 
+                     color = ~gender,
+                     colors = brewer.pal(n = 2, "Paired")) %>%
+        layout(title="Frequency of activities practised weekly or more often, by gender (%)",
+               yaxis=list(title = "Websites or apps"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "total_digital") {
-      p <- ggplot(data = data_digital()) +
-        geom_col(aes(x=Total, y=Activity, fill = Total), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Frequency of activities practised weekly or more often(%)", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p)
+      fig <- plot_ly(data = data_digital(),
+                     x = ~Total, 
+                     y = ~Activity, 
+                     type = 'bar', 
+                     color = ~Total,
+                     colors = brewer.pal(n = 10, "Paired")) %>%
+        layout(title="Frequency of activities practised weekly or more often (%)",
+               yaxis=list(title = "Websites or apps"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }   
     else if (input$ind_digital == "conf_digital" & input$dissag_digital == "age_digital") {   
-      p <- ggplot(data = data_digital()) +
-        geom_col(aes(x=age_value, y= Skill, fill=age_group), position = "stack")+
-        theme(legend.position = "none") +   
-        labs(title = "Children who report being fairly or very confident in a digital skill (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+      shinyjs::hide("dissag_digital")
+             fig <- plot_ly(data = data_digital(),
+                            x = ~age_value, 
+                            y = ~Skill, 
+                            type = 'bar', 
+                            color = ~age_group,
+                            colors = brewer.pal(n = 3, "Paired")) %>%
+               layout(title="Children who report being fairly or very confident in a digital skill (%)",
+                      yaxis=list(title = "Digital Skills"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }
   })   
 
@@ -329,97 +477,196 @@ function(input, output, session) {
   })
   
   
-  output$riskplot <-renderPlot({
+  output$riskplot <-renderPlotly({
     if (input$ind_risk == "upset_level" & input$dissag_risk == "age_risk"){
-      p1 <- ggplot(data = data_risk()) +
-        geom_col(aes(x=age_value, y= Level, fill=age_group), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s level of being upset by exposure to harmful content online, by age (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      
-      print(p1)
+             fig <- plot_ly(data = data_risk(),
+                            x = ~age_value, 
+                            y = ~Level, 
+                            type = 'bar', 
+                            color = ~age_group,
+                            colors = brewer.pal(n = 3, "Paired")) %>%
+               layout(title="Children’s level of being upset by exposure to harmful content online, by age (%)",
+                      yaxis=list(title = "Level"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }         
     else if (input$ind_risk == "upset_level" & input$dissag_risk == "gender_risk") {
       p1 <- ggplot(data = data_risk()) +
-        geom_col(aes(x=gender_value, y= Level, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s level of being upset by exposure to harmful content online, by gender (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+        fig <- plot_ly(data = data_risk(),
+                       x = ~gender_value, 
+                       y = ~Level, 
+                       type = 'bar', 
+                       color = ~gender,
+                       colors = brewer.pal(n = 2, "Paired")) %>%
+          layout(title="Children’s level of being upset by exposure to harmful content online, by gender (%)",
+                 yaxis=list(title = "Level"),
+                 xaxis=list(title = "Responders"),
+                 barmode= "stack") %>% config(displaylogo = FALSE,
+                                              modeBarButtonsToRemove = list(
+                                                'sendDataToCloud',
+                                                'autoScale2d',
+                                                'resetScale2d',
+                                                'hoverClosestCartesian',
+                                                'hoverCompareCartesian'
+                                              ))
     }
     else if (input$ind_risk == "upset_level" & input$dissag_risk == "total_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=Total, y= Level, fill = Total), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s level of being upset by exposure to harmful content online (%) ", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p)
+      fig <- plot_ly(data = data_risk(),
+                     x = ~Total, 
+                     y = ~Level, 
+                     type = 'bar', 
+                     color = ~Total,
+                     colors = brewer.pal(n = 10, "Paired")) %>%
+        layout(title="Children’s level of being upset by exposure to harmful content online, by age (%)",
+               yaxis=list(title = "Level"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }   
     else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "age_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=age_value, y= Frequency, fill=age_group), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How often children felt upset by hateful and degrading messages online, by age (%)", 
-             x = NULL, y = NULL)   +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+             fig <- plot_ly(data = data_risk(),
+                            x = ~age_value, 
+                            y = ~Frequency, 
+                            type = 'bar', 
+                            color = ~age_group,
+                            colors = brewer.pal(n = 3, "Paired")) %>%
+               layout(title="How often children felt upset by hateful and degrading messages online, by age (%)",
+                      yaxis=list(title = "Frequency"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }
     else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "gender_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=gender_value, y=Frequency, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How often children felt upset by hateful and degrading messages online, by age gender (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+      fig <- plot_ly(data = data_risk(),
+                     x = ~gender_value, 
+                     y = ~Frequency, 
+                     type = 'bar', 
+                     color = ~gender,
+                     colors = brewer.pal(n = 2, "Paired")) %>%
+        layout(title="How often children felt upset by hateful and degrading messages online, by gender (%)",
+               yaxis=list(title = "Frequency"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_risk == "upset_freq"  & input$dissag_risk == "total_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=Total, y=Frequency, fill = Total), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How often children felt upset by hateful and degrading messages online (%)", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p)
+      fig <- plot_ly(data = data_risk(),
+                     x = ~Total, 
+                     y = ~Frequency, 
+                     type = 'bar', 
+                     color = ~Total,
+                     colors = brewer.pal(n = 10, "Paired")) %>%
+        layout(title="How often children felt upset by hateful and degrading messages online",
+               yaxis=list(title = "Frequency"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }   
     else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "age_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=age_value, y= Means, fill=age_group), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Ways in which children were exposed to sexual content, by age (%) ", 
-             x = NULL, y = NULL)   +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+             fig <- plot_ly(data = data_risk(),
+                            x = ~age_value, 
+                            y = ~Means, 
+                            type = 'bar', 
+                            color = ~age_group,
+                            colors = brewer.pal(n = 3, "Paired")) %>%
+               layout(title="Ways in which children were exposed to sexual content, by age (%)",
+                      yaxis=list(title = "Ways of exposure"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }
     else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "gender_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=gender_value, y=Means, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Ways in which children were exposed to sexual content, by gender (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+      fig <- plot_ly(data = data_risk(),
+                     x = ~gender_value, 
+                     y = ~Means, 
+                     type = 'bar', 
+                     color = ~gender,
+                     colors = brewer.pal(n = 2, "Paired")) %>%
+        layout(title="Ways in which children were exposed to sexual content, by gender",
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_risk == "ways_exp"  & input$dissag_risk == "total_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=Total, y=Means, fill = Total), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Ways in which children were exposed to sexual content(%) ", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p)
+      fig <- plot_ly(data = data_risk(),
+                     x = ~Total, 
+                     y = ~Means, 
+                     type = 'bar', 
+                     color = ~Total,
+                     colors = brewer.pal(n = 10, "Paired")) %>%
+        layout(title="Ways in which children were exposed to sexual content",
+               yaxis=list(title = "Ways of exposure"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }   
     else if (input$ind_risk == "way_feel"  & input$dissag_risk == "gender_risk") {
-      p <- ggplot(data = data_risk()) +
-        geom_col(aes(x=gender_value, y=Feeling, fill=gender), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How children felt after seeing sexual content online, by gender (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p)
+             fig <- plot_ly(data = data_risk(),
+                            x = ~gender_value, 
+                            y = ~Feeling, 
+                            type = 'bar', 
+                            color = ~gender,
+                            colors = brewer.pal(n = 10, "Paired")) %>%
+               layout(title="How children felt after seeing sexual content online, by gender (%) ",
+                      yaxis=list(title = "Ways of feel"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }
     else if (input$ind_risk == "way_feel"  & input$dissag_risk == "total_risk") {
       p <- ggplot(data = data_risk()) +

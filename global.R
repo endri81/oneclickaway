@@ -8,6 +8,7 @@
 library(shiny)
 library(shinyBS) #modals
 library(gridExtra)
+library(ggthemes)
 library(readr)
 library(shinythemes) # layouts for shiny
 library(rmdformats)
@@ -26,13 +27,15 @@ library(rintrojs) # for help intros
 library(rmarkdown) # for help intros
 library(knitr)
 library(knitrBootstrap)
-library(extrafont)
-loadfonts(device = "win")
-extrafont::loadfonts(device="win")
 library(ggplot2)
 library(thematic)
+library(ggeasy)
+library(RColorBrewer)
+
+
 thematic_on(
-  bg = "#2FA4E7", fg = "#FFFAFA", accent = "#0CE3AC", font = "auto")
+  bg = "#2FA4E7", fg = "#FFFAFA", accent = "#0CE3AC", font = "Lato") 
+
 
 
 

@@ -235,7 +235,7 @@ title_box = "About", description = 'About dashboard One Click Away')
                           fluidPage(
                              titlePanel("Access to Internet"),
                              sidebarLayout(
-                                sidebarPanel(
+                                sidebarPanel( width = 4,
                                    radioButtons("ind_access", "Choose indicator:",
                                                 c("Reasons for limited access to Internet" = "reason_access",
                                                   "Places of Internet use" = "places_access",
@@ -244,13 +244,11 @@ title_box = "About", description = 'About dashboard One Click Away')
                                    selectInput("dissag_access", "Choose metrics:",
                                                c("By age" = "age_access",
                                                  "By gender" = "gender_access",
-                                                 "Total" = "total_access"), width  ='60%'),
-                                   width = 4
-                                   
+                                                 "Total" = "total_access"), width  ='60%')
                                 ),
                                 mainPanel(
                                    
-                                   plotOutput("accplot"),   width = 8))
+                                   plotlyOutput("accplot",  width = "auto")))
                              
                           ))
                        
@@ -279,7 +277,7 @@ title_box = "About", description = 'About dashboard One Click Away')
                                 ),
                                 mainPanel(
                                    
-                                   plotOutput("digplot"),   width = 8))
+                                   plotlyOutput("digplot"),   width = 8))
                              
                           ))
                        
@@ -312,7 +310,7 @@ title_box = "About", description = 'About dashboard One Click Away')
                                 ),
                                 mainPanel(
                                    
-                                   plotOutput("riskplot"),   width = 7))
+                                   plotlyOutput("riskplot"),   width = 7))
                              
                           ))
                        
@@ -341,7 +339,7 @@ title_box = "About", description = 'About dashboard One Click Away')
                                 ),
                                 mainPanel(
                                    
-                                   plotOutput("parentplot"),   width = 7))
+                                   plotlyOutput("parentplot"),   width = 7))
                              
                           ))
               ), #Tab panel bracket              
@@ -372,7 +370,7 @@ title_box = "About", description = 'About dashboard One Click Away')
                                 ),
                                 mainPanel(
                                    
-                                   plotOutput("chparentplot"),   width = 7))
+                                   plotlyOutput("chparentplot"),   width = 7))
                              
                           ))),#Tab panel bracket  
               
