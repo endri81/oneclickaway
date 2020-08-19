@@ -191,7 +191,7 @@ of children and parents for different study parts."
                                        "Methodology", class = "landing-page-box-title"),
                                 div(
                                    lp_about_box(
-                                      image_name = "landing_button_related_links",
+                                      image_name = "landing_button_technical_resources",
                                       button_name = 'jump_to_method',
                                       title_box = "Methodology",
                                       description = 'Methodology'
@@ -451,7 +451,6 @@ title_box = "About", description = 'About dashboard One Click Away')
                          ),#tabPanel bracket
                          ############## Tour of the tool----    
                          ###############################################.
-                         tabPanel("Tour of the tool", value = "tour"), #tab panel bracket
                          ###############################################.       
                          ## About ----
                          ###############################################.

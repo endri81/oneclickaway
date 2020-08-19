@@ -47,6 +47,13 @@ function(input, output, session) {
    introjs(session,
            events = list(onbeforechange = readCallback("switchTabs")))
  })
+  observe({
+    if (is.null(input$ind_access == "freq_access") || input$ind_access == "") {
+      shinyjs::hide("dissag_access")
+    } else {
+      shinyjs::show("dissag_access")
+    }
+  })  
   ############################################### 
   ## Internet Access  ----  
   ###############################################.
@@ -201,7 +208,6 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                ))
                 }   
                 else if (input$ind_access == "freq_access") {
-                  shinyjs::hide("dissag_access")
                   fig <- plot_ly(data = data_intacc(),
                                  x = ~Value, 
                                  y = ~Device, 
@@ -219,7 +225,6 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                           'hoverClosestCartesian',
                                                           'hoverCompareCartesian'
                                                         ))
-                  
 
                 }
                    }) 
@@ -242,7 +247,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
     } else if (input$ind_digital == "web_digital" & input$dissag_digital == "total_digital") {
       data_dig <- website_dig %>% select("Website_app", "Total")
     }
-    else if (input$ind_digital == "freq_act_digs" & input$dissag_digital == "age_digital") {
+    else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "age_digital") {
       data_dig <- freq_act_dig %>% select("Activity", "9–11",   "12–14",  "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
     } else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "gender_digital") {
@@ -321,7 +326,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }   
-    else if (input$ind_digital == "freq_act_digs" & input$dissag_digital == "age_digital") {
+    else if (input$ind_digital == "freq_act_dig" & input$dissag_digital == "age_digital") {
                            fig <- plot_ly(data = data_digital(),
                             x = ~age_value, 
                             y = ~Activity, 
@@ -378,8 +383,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }   
-    else if (input$ind_digital == "conf_digital" & input$dissag_digital == "age_digital") {   
-      shinyjs::hide("dissag_digital")
+    else if (input$ind_digital == "conf_digital") {   
              fig <- plot_ly(data = data_digital(),
                             x = ~age_value, 
                             y = ~Skill, 
@@ -421,25 +425,40 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
     else if (input$ind_risk == "upset_freq" & input$dissag_risk == "age_risk") {
       data_risk <- upset_freq %>% select("Frequency", "9–11",   "12–14",  "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
-    } else if (input$ind_risk == "upset_freq" & input$dissag_risk == "gender_risk") {
+    } 
+    else if (input$ind_risk == "upset_freq" & input$dissag_risk == "gender_risk") {
       data_risk <- upset_freq %>% select("Frequency", "Male", "Female")  %>%
         gather ("gender", "gender_value", "Male", "Female")  
-    } else if (input$ind_risk == "upset_freq" & input$dissag_risk == "total_risk") {
+    }
+    
+    else if (input$ind_risk == "upset_freq" & input$dissag_risk == "total_risk") {
       data_risk <- upset_freq %>% select("Frequency", "Total")
     }
     else if (input$ind_risk == "ways_exp" & input$dissag_risk == "age_risk") {
       data_risk <- means_exp %>% select("Means", "9–11",   "12–14",  "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
-    } else if (input$ind_risk == "ways_exp" & input$dissag_risk == "gender_risk") {
+    }
+    
+    else if (input$ind_risk == "ways_exp" & input$dissag_risk == "gender_risk") {
       data_risk <- means_exp %>% select("Means", "Male", "Female")  %>%
         gather ("gender", "gender_value", "Male", "Female")  
-    } else if (input$ind_risk == "ways_exp" & input$dissag_risk == "total_risk") {
+    }
+    
+    else if (input$ind_risk == "ways_exp" & input$dissag_risk == "total_risk") {
       data_risk <- means_exp %>% select("Means", "Total")
     }
-      else if (input$ind_risk == "way_feel" & input$dissag_risk == "gender_risk") {
+    
+    else if (input$ind_risk == "ways_feel" & input$dissag_risk == "age_risk") {
+      data_risk <- feeling_exp %>% select("Feeling", "9–11",   "12–14",  "15–17") %>%
+        gather("age_group", "age_value", "9–11", "12–14", "15–17")
+    }
+    
+    else if (input$ind_risk == "way_feel" & input$dissag_risk == "gender_risk") {
       data_risk <- feeling_exp %>% select("Feeling", "Male", "Female")  %>%
-        gather ("gender", "gender_value", "Male", "Female")  
-    } else if (input$ind_risk == "way_feel" & input$dissag_risk == "total_risk") {
+        gather("gender", "gender_value", "Male", "Female")  
+      
+    } 
+    else if (input$ind_risk == "way_feel" & input$dissag_risk == "total_risk") {
       data_risk <- feeling_exp %>% select("Feeling", "Total")
     }
     else if (input$ind_risk == "means_sex" & input$dissag_risk == "age_risk") {
@@ -447,7 +466,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
     } else if (input$ind_risk == "means_sex" & input$dissag_risk == "gender_risk") {
       data_risk <- means_sex %>% select("Means", "Male", "Female")  %>%
-        gather ("gender", "gender_value", "Male", "Female")  
+        gather("gender", "gender_value", "Male", "Female")  
     } else if (input$ind_risk == "means_sex" & input$dissag_risk == "total_risk") {
       data_risk <- means_sex %>% select("Means", "Total")
     }
@@ -456,7 +475,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
     } else if (input$ind_risk == "upset_level_sex" & input$dissag_risk == "gender_risk") {
       data_risk <- upset_level_dis %>% select("upset_level", "Male", "Female")  %>%
-        gather ("gender", "gender_value", "Male", "Female")  
+        gather("gender", "gender_value", "Male", "Female")  
     } else if (input$ind_risk == "upset_level_sex" & input$dissag_risk == "total_risk") {
       data_risk <- upset_level_dis %>% select("upset_level", "Total")
     }
@@ -465,7 +484,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
     } else if (input$ind_risk == "parent_aware" & input$dissag_risk == "gender_risk") {
       data_risk <- parent_aware %>% select("Online_risk", "Male", "Female")  %>%
-        gather ("gender", "gender_value", "Male", "Female")  
+        gather("gender", "gender_value", "Male", "Female")  
     } else if (input$ind_risk == "parent_aware" & input$dissag_risk == "total_risk") {
       data_risk <- parent_aware %>% select("Online_risk", "Total")
     }
@@ -498,7 +517,6 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                    ))
     }         
     else if (input$ind_risk == "upset_level" & input$dissag_risk == "gender_risk") {
-      p1 <- ggplot(data = data_risk()) +
         fig <- plot_ly(data = data_risk(),
                        x = ~gender_value, 
                        y = ~Level, 
@@ -649,6 +667,25 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }   
+    else if (input$ind_risk == "way_feel"  & input$dissag_risk == "age_risk") {
+      fig <- plot_ly(data = data_risk(),
+                     x = ~age_value, 
+                     y = ~Feeling, 
+                     type = 'bar', 
+                     color = ~age_group,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="How children felt after seeing sexual content online, by age (%) ",
+               yaxis=list(title = "Ways of feel"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
+    }
     else if (input$ind_risk == "way_feel"  & input$dissag_risk == "gender_risk") {
              fig <- plot_ly(data = data_risk(),
                             x = ~gender_value, 
@@ -747,7 +784,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
     else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "age_risk") {
              fig <- plot_ly(data = data_risk(),
                             x = ~age_value, 
-                            y = ~Means, 
+                            y = ~upset_level, 
                             type = 'bar', 
                             color = ~age_group,
                             colors = brewer.pal(n = 3, "Paired")) %>%
@@ -766,7 +803,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
     else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "gender_risk") {
       fig <- plot_ly(data = data_risk(),
                      x = ~gender_value, 
-                     y = ~Means, 
+                     y = ~upset_level, 
                      type = 'bar', 
                      color = ~gender,
                      colors = brewer.pal(n = 2, "Paired")) %>%
@@ -785,7 +822,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
     else if (input$ind_risk == "upset_level_sex"  & input$dissag_risk == "total_risk") {
       fig <- plot_ly(data = data_risk(),
                      x = ~Total, 
-                     y = ~Means, 
+                     y = ~upset_level, 
                      type = 'bar', 
                      color = ~Total,
                      colors = brewer.pal(n = 10, "Paired")) %>%
@@ -869,50 +906,50 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
   data_parent <- reactive({
     # Return the appropriate data source depending on
     # the chosen radio button
-    if (input$ind_parent == "parent_med" & input$btchparent == "age_parent") {
+    if (input$ind_parent == "parent_med" & input$dissag_parent == "age_parent") {
       data_parent <- parent_med %>% select("Mediation", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
     } 
-    else if (input$ind_parent == "parent_med" & input$btchparent == "gender_parent") {
+    else if (input$ind_parent == "parent_med" & input$dissag_parent == "gender_parent") {
       data_parent <- parent_med %>% select("Mediation", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
     } 
-    else if (input$ind_parent == "parent_med" & input$btchparent == "total_parent") {
+    else if (input$ind_parent == "parent_med" & input$dissag_parent == "total_parent") {
       data_parent <- parent_med %>% select("Mediation", "Total")
     }
-    else if (input$ind_parent == "child_act" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "child_act" & input$dissag_parent == "age_parent") {
       data_parent <- child_act %>% select("Activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "child_act" & input$btchparent == "gender_parent") {
+    } else if (input$ind_parent == "child_act" & input$dissag_parent == "gender_parent") {
       data_parent <- child_act %>% select("Activity", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "child_act" & input$btchparent == "total_parent") {
+    } else if (input$ind_parent == "child_act" & input$dissag_parent == "total_parent") {
       data_parent <- child_act %>% select("Activity", "Total")
     }
-    else if (input$ind_parent == "proh_act" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "proh_act" & input$dissag_parent == "age_parent") {
       data_parent <- proh_act %>% select("Activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "proh_act" & input$btchparent == "gender_parent") {
+    } else if (input$ind_parent == "proh_act" & input$dissag_parent == "gender_parent") {
       data_parent <- proh_act %>% select("Activity", Male, Female) %>%
-        gather ("gender", "gender_value", "Male", "Female")  
+        gather("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "proh_act" & input$btchparent == "total_parent") {
+    } else if (input$ind_parent == "proh_act" & input$dissag_parent == "total_parent") {
       data_parent <- proh_act %>% select("Activity", "Total")
     }
-    else if (input$ind_parent == "monitor" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "monitor" & input$dissag_parent == "age_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", "9–11", "12–14", "15–17") %>%
         gather("age_group", "age_value", "9–11", "12–14", "15–17")
       
-    } else if (input$ind_parent == "monitor" & input$btchparent == "gender_parent") {
+    } else if (input$ind_parent == "monitor" & input$dissag_parent == "gender_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", Male, Female) %>%
         gather ("gender", "gender_value", "Male", "Female")  
       
-    } else if (input$ind_parent == "monitor" & input$btchparent == "total_parent") {
+    } else if (input$ind_parent == "monitor" & input$dissag_parent== "total_parent") {
       data_parent <- monitor %>% select("Monitoring_activity", "Total")
     }
     
@@ -925,7 +962,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
   
   
   output$parentplot <-renderPlotly({
-    if (input$ind_parent == "parent_med" & input$btchparent == "age_parent") {
+    if (input$ind_parent == "parent_med" & input$dissag_parent == "age_parent") {
              fig <- plot_ly(data = data_parent(),
                             x = ~age_value, 
                             y = ~Mediation, 
@@ -944,7 +981,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                      'hoverCompareCartesian'
                                                    ))
     }         
-    else if (input$ind_parent == "parent_med" & input$btchparent == "gender_parent") {
+    else if (input$ind_parent == "parent_med" & input$dissag_parent == "gender_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~gender_value, 
                      y = ~Mediation, 
@@ -963,7 +1000,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }
-    else if (input$ind_parent == "parent_med" & input$btchparent == "total_parent") {
+    else if (input$ind_parent == "parent_med" & input$dissag_parent == "total_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~Total, 
                      y = ~Mediation, 
@@ -982,7 +1019,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }  
-    else if (input$ind_parent == "child_act" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "child_act" & input$dissag_parent == "age_parent") {
              fig <- plot_ly(data = data_parent(),
                             x = ~age_value, 
                             y = ~Activity, 
@@ -1001,7 +1038,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                      'hoverCompareCartesian'
                                                    ))
     }         
-    else if (input$ind_parent == "child_act" & input$btchparent == "gender_parent") {
+    else if (input$ind_parent == "child_act" & input$dissag_parent == "gender_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~gender_value, 
                      y = ~Activity, 
@@ -1020,7 +1057,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }
-    else if (input$ind_parent == "child_act" & input$btchparent == "total_parent") {
+    else if (input$ind_parent == "child_act" & input$dissag_parent == "total_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~Total, 
                      y = ~Activity, 
@@ -1039,7 +1076,7 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }  
-    else if (input$ind_parent == "proh_act" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "proh_act" & input$dissag_parent == "age_parent") {
              fig <- plot_ly(data = data_parent(),
                             x = ~age_value, 
                             y = ~Activity, 
@@ -1058,12 +1095,12 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                      'hoverCompareCartesian'
                                                    ))
     }         
-    else if (input$ind_parent == "proh_act" & input$btchparent == "gender_parent") {
+    else if (input$ind_parent == "proh_act" & input$dissag_parent == "gender_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~gender_value, 
                      y = ~Activity, 
                      type = 'bar', 
-                     color = ~gender_group,
+                     color = ~gender,
                      colors = brewer.pal(n = 2, "Paired")) %>%
         layout(title="Activities that parents prohibit their children from engaging in, by child’s gender (%) ",
                yaxis=list(title = "Activity"),
@@ -1077,14 +1114,14 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }
-    else if (input$ind_parent == "proh_act" & input$btchparent == "total_parent") {
+    else if (input$ind_parent == "proh_act" & input$dissag_parent == "total_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~Total, 
                      y = ~Activity, 
                      type = 'bar', 
                      color = ~Total,
                      colors = brewer.pal(n = 10, "Paired")) %>%
-        layout(title="Activities that parents prohibit their children from engaging in, by child’s age (%) ",
+        layout(title="Activities that parents prohibit their children from engaging in (%) ",
                yaxis=list(title = "Activity"),
                xaxis=list(title = "Responders"),
                barmode= "stack") %>% config(displaylogo = FALSE,
@@ -1096,13 +1133,13 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }  
-    else if (input$ind_parent == "monitor" & input$btchparent == "age_parent") {
+    else if (input$ind_parent == "monitor" & input$dissag_parent == "age_parent") {
              fig <- plot_ly(data = data_parent(),
                             x = ~age_value, 
                             y = ~Monitoring_activity, 
                             type = 'bar', 
                             color = ~age_group,
-                            colors = brewer.pal(n = 2, "Paired")) %>%
+                            colors = brewer.pal(n = 3, "Paired")) %>%
                layout(title="Parental monitoring activities practised often or very often, by child’s age (%) ",
                       yaxis=list(title = "Monitoring"),
                       xaxis=list(title = "Responders"),
@@ -1115,13 +1152,13 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                                      'hoverCompareCartesian'
                                                    ))
     }         
-    else if (input$ind_parent == "monitor" & input$btchparent == "gender_parent") {
+    else if (input$ind_parent == "monitor" & input$dissag_parent == "gender_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~gender_value, 
                      y = ~Monitoring_activity, 
                      type = 'bar', 
                      color = ~gender,
-                     colors = brewer.pal(n = 10, "Paired")) %>%
+                     colors = brewer.pal(n = 2, "Paired")) %>%
         layout(title="Parental monitoring activities practised often or very often, by child’s gender (%) ",
                yaxis=list(title = "Monitoring"),
                xaxis=list(title = "Responders"),
@@ -1134,13 +1171,13 @@ if (input$ind_access == "reason_access" & input$dissag_access == "age_access")
                                               'hoverCompareCartesian'
                                             ))
     }
-    else if (input$ind_parent == "monitor" & input$btchparent == "total_parent") {
+    else if (input$ind_parent == "monitor" & input$dissag_parent == "total_parent") {
       fig <- plot_ly(data = data_parent(),
                      x = ~Total, 
                      y = ~Monitoring_activity, 
                      type = 'bar', 
                      color = ~Total,
-                     colors = brewer.pal(n = 3, "Paired")) %>%
+                     colors = brewer.pal(n = 10, "Paired")) %>%
         layout(title="Parental monitoring activities practised often or very often",
                yaxis=list(title = "Monitoring"),
                xaxis=list(title = "Responders"),
@@ -1384,156 +1421,293 @@ a digital skill" = "skill_conf_dig"),
   output$chparentplot <-renderPlotly({
     
     if (input$ind_parentchildren == "skill" & input$btchparent == "parent") {
-    
-        p1 <- ggplot(data = chparent()) +
-        geom_col(aes(Parents, Skill, fill = "#0073C2FF"), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Parents who report being fairly or very confident in a digital skill  (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      
-      print(p1)
+             fig <- plot_ly(data = chparent(),
+                            x = ~Parents, 
+                            y = ~Skill, 
+                            type = 'bar', 
+                            marker = list(color = "#A6CEE3")) %>%
+               layout(title="Parents who report being fairly or very confident in a digital skill  (%)",
+                      yaxis=list(title = "Skill"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }   
     
     else if (input$ind_parentchildren == "skill" & input$btchparent == "children") {
-    
-        p1 <- ggplot(data = chparent()) +
-        geom_col(aes(Children, Skill, fill = "#0073C2FF"), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children who report being fairly or very confident in a digital skill  (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Children, 
+                     y = ~Skill, 
+                     type = 'bar', 
+                     marker = list(color = "#B2DF8A")) %>%
+        layout(title="Children who report being fairly or very confident in a digital skill  (%)",
+               yaxis=list(title = "Skill"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     
     else if (input$ind_parentchildren == "skill" & input$btchparent == "all") {
     
-        p1 <- ggplot(data = chparent()) +
-        geom_col(aes(x=Value, y= Skill, fill = Type), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Parents and children who report being fairly or very confident in a digital skill  (%)", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Value, 
+                     y = ~Skill, 
+                     type = 'bar', 
+                     color = ~Type,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="Parents and children who report being fairly or very confident in a digital skill  (%)",
+               yaxis=list(title = "Skill"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }  
     
     else if (input$ind_parentchildren == "harm" & input$btchparent == "parent") {
       
-        p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Parents, Experience, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Harmful online experiences according to parents (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Parents, 
+                     y = ~Experience, 
+                     type = 'bar', 
+                     marker = list(color = "#A6CEE3")) %>%
+        layout(title="Harmful online experiences according to parents(%)",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }         
     else if (input$ind_parentchildren == "harm" & input$btchparent == "children") {
       
-       p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Children, Experience, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Harmful online experiences according to parents (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Children, 
+                     y = ~Experience, 
+                     type = 'bar', 
+                     marker = list(color = "#B2DF8A")) %>%
+        layout(title="Harmful online experiences according to children(%)",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_parentchildren == "harm"  & input$btchparent == "all") {
-        p1 <- ggplot(data = chparent()) +
-          geom_col(aes(x=Value, y= Experience, fill = Type), position = "stack")+
-          theme(legend.position = "none")    + 
-          labs(title = "Harmful online experiences according to parents and children (%)", 
-               x = NULL, y = NULL)  +
-          scale_color_manual(values = pal_simd_bar)
-        print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Value, 
+                     y = ~Experience, 
+                     type = 'bar', 
+                     color = ~Type,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="Harmful online experiences according to parents and children(%)",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }  
     
     else if (input$ind_parentchildren == "intlim" & input$btchparent == "parent") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Parents, Internet_limit, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s time limits for Internet, according to parents (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+             fig <- plot_ly(data = chparent(),
+                            x = ~Parents, 
+                            y = ~Internet_limit, 
+                            type = 'bar', 
+                            marker = list(color = "#A6CEE3")) %>%
+               layout(title="Children’s time limits for Internet, according to parents (%) ",
+                      yaxis=list(title = "Experience"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }         
     else if (input$ind_parentchildren == "intlim" & input$btchparent == "children") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Children, Internet_limit, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s time limits for Internet, according to children (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Children, 
+                     y = ~Internet_limit, 
+                     type = 'bar', 
+                     marker = list(color = "#B2DF8A")) %>%
+        layout(title="Children’s time limits for Internet, according to children (%) ",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_parentchildren == "intlim"  & input$btchparent == "all") {
-      p1 <- ggplot(data = chparent()) +
-        geom_col(aes(x=Value, y= Internet_limit, fill = Type), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Children’s time limits for Internet, according to children and parents (%) ", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Value, 
+                     y = ~Internet_limit, 
+                     type = 'bar', 
+                     color = ~Type,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="Children’s time limits for Internet, according to parents and children (%) ",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     } 
     else if (input$ind_parentchildren == "control" & input$btchparent == "parent") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Parents, Parent_control, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Parental controls over children’s Internet use, according to parents (%) ", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+             fig <- plot_ly(data = chparent(),
+                            x = ~Parents, 
+                            y = ~Parent_control, 
+                            type = 'bar', 
+                            marker = list(color = "#A6CEE3")) %>%
+               layout(title="Parental controls over children’s Internet use, according to parents (%) ",
+                      yaxis=list(title = "Experience"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }         
     else if (input$ind_parentchildren == "control" & input$btchparent == "children") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Children, Parent_control, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Parental controls over children’s Internet use, according to children (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Children, 
+                     y = ~Parent_control, 
+                     type = 'bar', 
+                     marker = list(color = "#B2DF8A")) %>%
+        layout(title="Parental controls over children’s Internet use, according to children (%) ",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_parentchildren == "control"  & input$btchparent == "all") {
-      p1 <- ggplot(data = chparent()) +
-        geom_col(aes(x=Value, y= Parent_control, fill = Type), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "Parental controls over children’s Internet use, according to children and parents (%) ", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Value, 
+                     y = ~Parent_control, 
+                     type = 'bar', 
+                     color = ~Type,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="Parental controls over children’s Internet use, according to parents and children (%) ",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     } 
     
     else if (input$ind_parentchildren == "monitor" & input$btchparent == "parent") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Parents, Subject, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How children are subject to parental monitoring, often or very often, according to parents (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+             fig <- plot_ly(data = chparent(),
+                            x = ~Parents, 
+                            y = ~Subject, 
+                            type = 'bar', 
+                            marker = list(color = "#A6CEE3")) %>%
+               layout(title="How children are subject to parental monitoring, often or very often, according to parents (%)",
+                      yaxis=list(title = "Experience"),
+                      xaxis=list(title = "Responders"),
+                      barmode= "stack") %>% config(displaylogo = FALSE,
+                                                   modeBarButtonsToRemove = list(
+                                                     'sendDataToCloud',
+                                                     'autoScale2d',
+                                                     'resetScale2d',
+                                                     'hoverClosestCartesian',
+                                                     'hoverCompareCartesian'
+                                                   ))
     }         
     else if (input$ind_parentchildren == "monitor" & input$btchparent == "children") {
       
-      p1 <- ggplot(data = chparent()) +
-        geom_bar(aes(Children, Subject, fill = "#0073C2FF"), stat = "identity", position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How children are subject to parental monitoring, often or very often, according to children (%)", 
-             x = NULL, y = NULL)  +
-        scale_fill_brewer(type = "qual", palette = "PRGn")
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Children, 
+                     y = ~Subject, 
+                     type = 'bar', 
+                     marker = list(color = "#B2DF8A")) %>%
+        layout(title="How children are subject to parental monitoring, often or very often, according to children (%)",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     }
     else if (input$ind_parentchildren == "monitor"  & input$btchparent == "all") {
-      p1 <- ggplot(data = chparent()) +
-        geom_col(aes(x=Value, y= Subject, fill = Type), position = "stack")+
-        theme(legend.position = "none")    + 
-        labs(title = "How children are subject to parental monitoring, often or very often, according to children and parents (%)", 
-             x = NULL, y = NULL)  +
-        scale_color_manual(values = pal_simd_bar)
-      print(p1)
+      fig <- plot_ly(data = chparent(),
+                     x = ~Value, 
+                     y = ~Subject, 
+                     type = 'bar',
+                     color = ~Type,
+                     colors = brewer.pal(n = 3, "Paired")) %>%
+        layout(title="How children are subject to parental monitoring, often or very often, according to parents and children (%)",
+               yaxis=list(title = "Experience"),
+               xaxis=list(title = "Responders"),
+               barmode= "stack") %>% config(displaylogo = FALSE,
+                                            modeBarButtonsToRemove = list(
+                                              'sendDataToCloud',
+                                              'autoScale2d',
+                                              'resetScale2d',
+                                              'hoverClosestCartesian',
+                                              'hoverCompareCartesian'
+                                            ))
     } 
     
     
